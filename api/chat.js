@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const { messages } = req.body;
 
     const response = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1000,
       system: "你是一个友好专业的AI学习助手。用清晰易懂的中文回答问题，多举例子帮助理解。",
       messages,
