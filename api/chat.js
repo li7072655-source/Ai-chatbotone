@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -8,19 +8,26 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
   try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const { messages } = req.body;
-
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1000,
-      system: "你是一个友好专业的AI学习助手。用清晰易懂的中文回答问题，多举例子帮助理解。",
-      messages,
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      systemInstruction: "你是一个友好专业的AI学习助手。用清晰易懂的中文回答问题，多举例子帮助理解。",
     });
 
-    res.status(200).json({ reply: response.content[0].text });
+    const { messages } = req.body;
+    const history = messages.slice(0, -1).map(m => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    }));
+    const lastMsg = messages[messages.length - 1].content;
+
+    const chat = model.startChat({ history });
+    const result = await chat.sendMessage(lastMsg);
+    const reply = result.response.text();
+
+    res.status(200).json({ reply });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "AI 服务出错，请稍后重试" });
+    res.status(500).json({ error: "AI 服务出错：" + err.message });
   }
 }
