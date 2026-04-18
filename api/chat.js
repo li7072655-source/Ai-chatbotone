@@ -10,7 +10,7 @@ const handler = async (req, res) => {
     const lastMsg = messages[messages.length - 1].content;
 
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct`,
+      `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-4-scout-17b-16e-instruct`,
       {
         method: "POST",
         headers: {
