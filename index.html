@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AI 助手</title>
+<title>星智 AI 助手</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -14,8 +14,9 @@
   --user-bg:#f4f4f4;
   --input-bg:#ffffff;--hover:#f0f0f0;--hover2:#e8e8e8;
   --danger:#e53e3e;
-  --shadow:0 1px 4px rgba(0,0,0,.08);--shadow2:0 4px 20px rgba(0,0,0,.12);
-  --radius:12px;--sidebar-w:260px;
+  --think-bg:#fef9ec;--think-border:#f5a623;
+  --shadow:0 1px 4px rgba(0,0,0,.08);
+  --sidebar-w:260px;
 }
 .dark{
   --bg:#212121;--sidebar:#171717;--border:#333;--border2:#444;
@@ -23,10 +24,16 @@
   --accent-light:#0d2e27;
   --user-bg:#2a2a2a;
   --input-bg:#2a2a2a;--hover:#2a2a2a;--hover2:#333;
-  --shadow:0 1px 4px rgba(0,0,0,.3);--shadow2:0 4px 20px rgba(0,0,0,.4);
+  --think-bg:#2a2415;--think-border:#b8860b;
+  --shadow:0 1px 4px rgba(0,0,0,.3);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:15px;transition:background .2s,color .2s}
+ 
+/* ── LOGO SVG ── */
+.logo-svg{display:flex;align-items:center;justify-content:center;flex-shrink:0}
+ 
+/* ── SIDEBAR ── */
 #sidebar{width:var(--sidebar-w);background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s}
 #sidebar.hidden{transform:translateX(-100%);width:0;overflow:hidden}
 #sidebar-top{padding:12px 10px 8px;display:flex;flex-direction:column;gap:6px}
@@ -39,16 +46,18 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 #conv-list::-webkit-scrollbar{width:3px}
 #conv-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 .conv-group-label{font-size:11px;color:var(--text3);padding:10px 8px 4px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
-.conv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.12s;position:relative;margin-bottom:1px}
+.conv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.12s;margin-bottom:1px}
 .conv-item:hover{background:var(--hover2)}
 .conv-item.active{background:var(--hover2)}
 .conv-item .ci-title{flex:1;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .conv-item .ci-del{opacity:0;color:var(--text3);font-size:16px;cursor:pointer;padding:1px 5px;border-radius:4px;flex-shrink:0;line-height:1}
 .conv-item:hover .ci-del{opacity:1}
-.conv-item .ci-del:hover{background:var(--hover);color:var(--danger)}
+.conv-item .ci-del:hover{color:var(--danger)}
 #sidebar-footer{padding:10px 8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:2px}
 .sf-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:.12s;user-select:none}
 .sf-btn:hover{background:var(--hover2);color:var(--text)}
+ 
+/* ── MAIN ── */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 #topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
 #toggle-sidebar{background:none;border:none;cursor:pointer;color:var(--text2);padding:6px;border-radius:6px;display:flex;align-items:center;transition:.12s}
@@ -56,27 +65,33 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 #topbar-title{font-size:14px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tb-btn{background:none;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--text2);padding:5px 10px;font-size:12px;font-family:inherit;display:flex;align-items:center;gap:5px;transition:.12s}
 .tb-btn:hover{background:var(--hover);color:var(--text)}
+ 
+/* ── MESSAGES ── */
 #messages{flex:1;overflow-y:auto;padding:24px 0 8px;scroll-behavior:smooth}
 #messages::-webkit-scrollbar{width:5px}
 #messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 .msg-wrap{max-width:800px;margin:0 auto;padding:0 20px}
 #welcome{text-align:center;padding:32px 0 24px}
-#welcome h1{font-size:26px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em}
+#welcome h1{font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-.02em}
 #welcome p{color:var(--text2);font-size:14px;margin-bottom:28px;line-height:1.6}
 .sug-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
-.sug-card{border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:.15s;background:var(--bg)}
+.sug-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.15s;background:var(--bg)}
 .sug-card:hover{border-color:var(--accent);background:var(--accent-light)}
 .sc-icon{font-size:18px;margin-bottom:6px}
 .sc-title{font-size:13px;font-weight:500;margin-bottom:3px}
 .sc-sub{font-size:12px;color:var(--text2);line-height:1.4}
+ 
+/* ── MESSAGES ── */
 .msg-row{margin-bottom:4px;animation:fadeUp .18s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg-row.user .msg-inner{display:flex;justify-content:flex-end;gap:10px;align-items:flex-start}
-.msg-row.ai .msg-inner{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:flex-start}
-.ai-av{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;margin-top:2px}
+.msg-row.ai .msg-inner{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:flex-start}
+ 
+/* AI Avatar - custom logo */
+.ai-av{width:38px;height:38px;flex-shrink:0;margin-top:2px}
 .user-av{width:30px;height:30px;border-radius:50%;background:var(--text);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;margin-top:6px}
 .user-bubble{background:var(--user-bg);padding:10px 16px;border-radius:18px;border-top-right-radius:4px;font-size:15px;line-height:1.65;max-width:85%;word-break:break-word;white-space:pre-wrap}
-.ai-body{font-size:15px;line-height:1.75;color:var(--text);padding-top:6px;word-break:break-word;min-width:0}
+.ai-body{font-size:15px;line-height:1.75;color:var(--text);padding-top:4px;word-break:break-word;min-width:0}
 .ai-body p{margin-bottom:10px}
 .ai-body p:last-child{margin-bottom:0}
 .ai-body strong{font-weight:600}
@@ -97,21 +112,43 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .pre-header{display:flex;align-items:center;justify-content:space-between;background:#2d2d2d;padding:6px 14px;border-radius:10px 10px 0 0;font-size:12px;color:#aaa}
 .copy-code-btn{background:none;border:1px solid #555;color:#aaa;cursor:pointer;font-size:11px;padding:2px 8px;border-radius:4px;font-family:inherit;transition:.12s}
 .copy-code-btn:hover{background:#444;color:#fff}
+ 
+/* ── THINK BLOCK ── */
+.think-block{border:1px solid var(--think-border);border-radius:10px;margin-bottom:12px;overflow:hidden;background:var(--think-bg)}
+.think-header{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;font-size:13px;color:var(--think-border);font-weight:500;transition:.12s}
+.think-header:hover{opacity:.8}
+.think-icon{font-size:15px;animation:spin 2s linear infinite}
+.think-icon.done{animation:none}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.think-arrow{margin-left:auto;font-size:11px;transition:transform .2s;color:var(--text3)}
+.think-arrow.open{transform:rotate(180deg)}
+.think-body{padding:0 12px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.think-body.open{max-height:500px;padding:8px 12px 12px}
+.think-body p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:6px}
+.think-body p:last-child{margin-bottom:0}
+ 
+/* ── MSG ACTIONS ── */
 .msg-actions{display:flex;gap:4px;margin-top:8px;opacity:0;transition:.15s}
 .msg-row:hover .msg-actions,.msg-row:focus-within .msg-actions{opacity:1}
 .ma-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px 7px;border-radius:6px;font-size:12px;display:flex;align-items:center;gap:4px;font-family:inherit;transition:.12s}
 .ma-btn:hover{background:var(--hover);color:var(--text)}
+ 
+/* ── ATTACHMENTS ── */
 .attach-preview{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;justify-content:flex-end}
 .attach-thumb{border-radius:10px;overflow:hidden;border:1px solid var(--border)}
 .attach-thumb img{width:120px;height:90px;object-fit:cover;display:block}
 .attach-file{display:flex;align-items:center;gap:8px;background:var(--user-bg);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px}
 .af-name{font-weight:500;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .af-size{font-size:11px;color:var(--text3)}
+ 
+/* ── TYPING ── */
 .typing-dots{display:flex;gap:4px;padding:10px 0}
 .typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--text3);animation:blink 1.3s infinite;display:inline-block}
 .typing-dots span:nth-child(2){animation-delay:.2s}
 .typing-dots span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,60%,100%{opacity:.25;transform:scale(.75)}30%{opacity:1;transform:scale(1)}}
+ 
+/* ── INPUT ── */
 #input-area{padding:12px 20px 16px;flex-shrink:0}
 #input-box{max-width:800px;margin:0 auto;background:var(--input-bg);border:1px solid var(--border2);border-radius:16px;box-shadow:var(--shadow);transition:.15s}
 #input-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(16,163,127,.12)}
@@ -129,12 +166,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 #send-btn{width:36px;height:36px;border-radius:9px;border:none;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
 #send-btn:hover{background:var(--accent-h)}
 #send-btn:disabled{background:var(--border2);cursor:default}
-#stop-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:none;color:var(--text);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
+#stop-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:none;color:var(--text);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0}
 #stop-btn:hover{background:var(--hover)}
 #input-hint{max-width:800px;margin:6px auto 0;font-size:11px;color:var(--text3);text-align:center}
+#file-input{display:none}
+ 
+/* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
-.modal{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;width:440px;max-width:90vw;box-shadow:var(--shadow2)}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;width:440px;max-width:90vw;box-shadow:0 4px 20px rgba(0,0,0,.12)}
 .modal h2{font-size:17px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
 .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);line-height:1}
 .modal-close:hover{color:var(--text)}
@@ -149,14 +189,13 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 select.sel{background:var(--input-bg);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;cursor:pointer}
 .modal-footer{margin-top:16px;display:flex;justify-content:flex-end;gap:8px}
 .btn{padding:8px 16px;border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer;border:1px solid var(--border2);background:var(--hover);color:var(--text);transition:.12s}
-.btn:hover{background:var(--hover2)}
 .btn.primary{background:var(--accent);color:#fff;border-color:transparent}
 .btn.primary:hover{background:var(--accent-h)}
 .btn.danger{background:var(--danger);color:#fff;border-color:transparent}
-#file-input{display:none}
-#scroll-btn{position:fixed;bottom:120px;right:24px;background:var(--bg);border:1px solid var(--border2);border-radius:50%;width:36px;height:36px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow2);color:var(--text2);z-index:10;font-size:18px}
+ 
+/* ── MISC ── */
+#scroll-btn{position:fixed;bottom:120px;right:24px;background:var(--bg);border:1px solid var(--border2);border-radius:50%;width:36px;height:36px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.12);color:var(--text2);z-index:10;font-size:18px}
 #scroll-btn.show{display:flex}
-#scroll-btn:hover{background:var(--hover)}
 #toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a1a1a;color:#fff;padding:8px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.25s;z-index:200;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:640px){
@@ -170,6 +209,32 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
 </head>
 <body>
  
+<!-- ── CUSTOM LOGO SVG (defined once, reused) ── -->
+<svg style="display:none">
+  <defs>
+    <symbol id="logo-icon" viewBox="0 0 40 40">
+      <!-- Outer circle -->
+      <circle cx="20" cy="20" r="19" fill="#10a37f"/>
+      <!-- Face bg -->
+      <circle cx="20" cy="21" r="13" fill="#0d2e27"/>
+      <!-- Eyes -->
+      <circle cx="15" cy="19" r="3" fill="#10a37f"/>
+      <circle cx="25" cy="19" r="3" fill="#10a37f"/>
+      <circle cx="16" cy="18" r="1.2" fill="#fff"/>
+      <circle cx="26" cy="18" r="1.2" fill="#fff"/>
+      <!-- Smile -->
+      <path d="M14 24 Q20 29 26 24" stroke="#10a37f" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Antenna -->
+      <line x1="20" y1="8" x2="20" y2="2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="20" cy="1.5" r="1.8" fill="#5bcfb2"/>
+      <!-- Ears -->
+      <rect x="2" y="17" width="3.5" height="7" rx="1.5" fill="#10a37f"/>
+      <rect x="34.5" y="17" width="3.5" height="7" rx="1.5" fill="#10a37f"/>
+    </symbol>
+  </defs>
+</svg>
+ 
+<!-- Sidebar -->
 <div id="sidebar">
   <div id="sidebar-top">
     <button id="new-btn" onclick="newChat()">
@@ -194,12 +259,15 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
   </div>
 </div>
  
+<!-- Main -->
 <div id="main">
   <div id="topbar">
     <button id="toggle-sidebar" onclick="toggleSidebar()">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <span id="topbar-title">新对话</span>
+    <!-- Logo in topbar -->
+    <svg class="logo-svg" width="26" height="26"><use href="#logo-icon"/></svg>
+    <span id="topbar-title" style="font-weight:600">星智 AI 助手</span>
     <button class="tb-btn" onclick="exportChat()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       导出
@@ -216,7 +284,7 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
         <button class="ib-btn" onclick="document.getElementById('file-input').click()" title="上传文件/图片">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
         </button>
-        <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt,.csv,.xlsx,.docx,.json,.md" onchange="handleFiles(this.files)">
+        <input type="file" id="file-input" multiple accept="image/*,.txt,.csv,.md,.json" onchange="handleFiles(this.files)">
         <textarea id="input" placeholder="发送消息…" rows="1" oninput="onInput()" onkeydown="onKey(event)"></textarea>
         <button id="stop-btn" onclick="stopGen()" title="停止生成">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -226,7 +294,7 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
         </button>
       </div>
     </div>
-    <div id="input-hint">支持上传图片、PDF、表格、文档 · Enter 发送 · Shift+Enter 换行</div>
+    <div id="input-hint">支持上传图片、TXT、CSV、JSON、MD · Enter 发送 · Shift+Enter 换行</div>
   </div>
 </div>
  
@@ -239,8 +307,8 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
       <button class="toggle" id="dark-toggle" onclick="toggleDark()"></button>
     </div>
     <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
-      <div><div class="setting-label">AI 角色设定</div><div class="setting-sub">自定义 AI 的身份和行为方式</div></div>
-      <textarea id="system-prompt" style="width:100%;height:80px;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;background:var(--input-bg);color:var(--text);resize:vertical;outline:none">你是一个友好专业的AI助手。用清晰易懂的中文回答问题，多举例子帮助理解。</textarea>
+      <div><div class="setting-label">AI 角色设定</div><div class="setting-sub">自定义助手的身份和风格</div></div>
+      <textarea id="system-prompt-ui" style="width:100%;height:80px;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;background:var(--input-bg);color:var(--text);resize:vertical;outline:none">你是一个友好专业的AI学习助手。</textarea>
     </div>
     <div class="setting-row">
       <div><div class="setting-label">字体大小</div></div>
@@ -274,9 +342,13 @@ select.sel{background:var(--input-bg);border:1px solid var(--border2);border-rad
 <div id="toast"></div>
  
 <script>
+// ── STATE ──
 let convs=JSON.parse(localStorage.getItem('ai_convs')||'[]');
 let activeId=null,history=[],attachments=[],busy=false;
 let settings=JSON.parse(localStorage.getItem('ai_settings')||'{}');
+ 
+// ── LOGO SVG STRING (reused in messages) ──
+const LOGO_SVG = `<svg width="38" height="38" viewBox="0 0 40 40"><use href="#logo-icon"/></svg>`;
  
 function init(){
   applySettings();
@@ -288,11 +360,12 @@ function init(){
 function applySettings(){
   if(settings.dark)document.body.classList.add('dark');
   if(settings.fontSize)document.body.style.fontSize=settings.fontSize+'px';
-  if(settings.systemPrompt)document.getElementById('system-prompt').value=settings.systemPrompt;
+  if(settings.systemPrompt)document.getElementById('system-prompt-ui').value=settings.systemPrompt;
   document.getElementById('dark-toggle').classList.toggle('on',!!settings.dark);
   if(settings.fontSize)document.getElementById('font-size-sel').value=settings.fontSize;
 }
  
+// ── SIDEBAR ──
 function renderSidebar(filter=''){
   const list=document.getElementById('conv-list');
   const f=filter.toLowerCase();
@@ -303,9 +376,8 @@ function renderSidebar(filter=''){
   const groups={};
   filtered.forEach(c=>{
     const d=new Date(c.ts||Date.now());d.setHours(0,0,0,0);
-    const g=d>=today?'今天':d>=yesterday?'昨天':d>=(new Date(today-6*864e5))?'最近7天':'更早';
-    if(!groups[g])groups[g]=[];
-    groups[g].push(c);
+    const g=d>=today?'今天':d>=yesterday?'昨天':d>=(new Date(+today-6*864e5))?'最近7天':'更早';
+    if(!groups[g])groups[g]=[];groups[g].push(c);
   });
   let html='';
   ['今天','昨天','最近7天','更早'].forEach(g=>{
@@ -322,10 +394,17 @@ function renderSidebar(filter=''){
   list.innerHTML=html;
 }
  
+function toggleSidebar(){
+  const s=document.getElementById('sidebar');
+  if(window.innerWidth<=640)s.classList.toggle('mobile-open');
+  else s.classList.toggle('hidden');
+}
+ 
+// ── CONVERSATIONS ──
 function newChat(){
   activeId=null;history=[];attachments=[];
   showWelcome();renderSidebar();
-  document.getElementById('topbar-title').textContent='新对话';
+  document.getElementById('topbar-title').textContent='星智 AI 助手';
   document.getElementById('attach-preview-bar').innerHTML='';
   document.getElementById('attach-preview-bar').classList.remove('show');
   if(window.innerWidth<=640)document.getElementById('sidebar').classList.remove('mobile-open');
@@ -367,33 +446,59 @@ function confirmClearAll(){
   newChat();
 }
  
-function toggleSidebar(){
-  const s=document.getElementById('sidebar');
-  if(window.innerWidth<=640)s.classList.toggle('mobile-open');
-  else s.classList.toggle('hidden');
-}
- 
+// ── WELCOME ──
 function showWelcome(){
   document.getElementById('messages').innerHTML=`<div class="msg-wrap"><div id="welcome">
-    <div style="font-size:36px;margin-bottom:12px">✨</div>
-    <h1>你好，有什么可以帮你？</h1>
-    <p>支持上传图片、文档、表格一起分析</p>
+    <div style="margin-bottom:16px">${LOGO_SVG.replace('width="38" height="38"','width="60" height="60" style="display:inline-block"')}</div>
+    <h1>你好，我是星智 AI 助手</h1>
+    <p>支持上传文本文件一起分析，带思考链，回答更透明</p>
     <div class="sug-grid">
-      <div class="sug-card" onclick="quick('用通俗易懂的方式解释量子计算')"><div class="sc-icon">🔬</div><div class="sc-title">解释复杂概念</div><div class="sc-sub">把难懂的知识变得简单易懂</div></div>
-      <div class="sug-card" onclick="quick('帮我写一份专业的项目总结报告')"><div class="sc-icon">✍️</div><div class="sc-title">写作助手</div><div class="sc-sub">报告、邮件、文案一键生成</div></div>
-      <div class="sug-card" onclick="quick('用 Python 写一个排序算法并解释原理')"><div class="sc-icon">💻</div><div class="sc-title">编程助手</div><div class="sc-sub">代码编写、调试、解释</div></div>
-      <div class="sug-card" onclick="quick('分析一下当前 AI 行业的发展趋势')"><div class="sc-icon">📊</div><div class="sc-title">分析研究</div><div class="sc-sub">数据分析、行业研究、报告</div></div>
+      <div class="sug-card" onclick="quick('用通俗的方式解释量子纠缠')"><div class="sc-icon">🔬</div><div class="sc-title">解释复杂概念</div><div class="sc-sub">把难懂的知识变简单</div></div>
+      <div class="sug-card" onclick="quick('帮我写一份专业的项目总结报告')"><div class="sc-icon">✍️</div><div class="sc-title">写作助手</div><div class="sc-sub">报告、邮件、文案</div></div>
+      <div class="sug-card" onclick="quick('用 Python 写一个冒泡排序并解释原理')"><div class="sc-icon">💻</div><div class="sc-title">编程助手</div><div class="sc-sub">代码编写、调试、解释</div></div>
+      <div class="sug-card" onclick="quick('分析一下 AI 行业的最新发展趋势')"><div class="sc-icon">📊</div><div class="sc-title">分析研究</div><div class="sc-sub">行业研究、数据分析</div></div>
     </div>
   </div></div>`;
 }
  
+// ── PARSE THINK + ANSWER ──
+function parseReply(raw) {
+  const thinkMatch = raw.match(/<think>([\s\S]*?)<\/think>/i);
+  const think = thinkMatch ? thinkMatch[1].trim() : null;
+  const answer = raw.replace(/<think>[\s\S]*?<\/think>/i, '').trim();
+  return { think, answer };
+}
+ 
+function buildThinkBlock(thinkText, isStreaming=false) {
+  const id = 'think-' + Date.now() + Math.random().toString(36).slice(2);
+  return `<div class="think-block">
+    <div class="think-header" onclick="toggleThink('${id}')">
+      <span class="think-icon${isStreaming?'':' done'}">⚙️</span>
+      <span>${isStreaming?'思考中…':'已完成思考'}</span>
+      <span class="think-arrow" id="${id}-arrow">▼</span>
+    </div>
+    <div class="think-body" id="${id}">
+      ${thinkText.split('\n').filter(l=>l.trim()).map(l=>`<p>${esc(l)}</p>`).join('')}
+    </div>
+  </div>`;
+}
+ 
+function toggleThink(id) {
+  const body = document.getElementById(id);
+  const arrow = document.getElementById(id+'-arrow');
+  if(!body)return;
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+ 
+// ── RENDER MESSAGES ──
 function renderMessages(){
   const el=document.getElementById('messages');el.innerHTML='';
   history.forEach((m,i)=>el.appendChild(buildMsgEl(m,i)));
   scrollBottom();
 }
  
-function buildMsgEl(m,idx){
+function buildMsgEl(m, idx){
   const wrap=document.createElement('div');wrap.className='msg-wrap';
   if(m.role==='user'){
     let atHtml='';
@@ -406,19 +511,20 @@ function buildMsgEl(m,idx){
       atHtml+='</div>';
     }
     wrap.innerHTML=`<div class="msg-row user"><div class="msg-inner">
-      <div>${atHtml}<div class="user-bubble">${esc(m.content)}</div>
+      <div>${atHtml}<div class="user-bubble">${esc(m.content||'')}</div>
       <div class="msg-actions" style="justify-content:flex-end">
-        <button class="ma-btn" onclick="copyText(${JSON.stringify(m.content)})">📋 复制</button>
-        <button class="ma-btn" onclick="regenFrom(${idx})">🔄 重新生成</button>
+        <button class="ma-btn" onclick="copyText(${JSON.stringify(m.content||'')})">📋 复制</button>
       </div></div>
       <div class="user-av">我</div>
     </div></div>`;
-  }else{
+  } else {
+    const {think, answer} = parseReply(m.content||'');
+    const thinkHtml = think ? buildThinkBlock(think, false) : '';
     wrap.innerHTML=`<div class="msg-row ai"><div class="msg-inner">
-      <div class="ai-av">AI</div>
-      <div><div class="ai-body">${fmt(m.content)}</div>
+      <div class="ai-av">${LOGO_SVG}</div>
+      <div><div class="ai-body">${thinkHtml}${fmt(answer)}</div>
       <div class="msg-actions">
-        <button class="ma-btn" onclick="copyText(${JSON.stringify(m.content)})">📋 复制</button>
+        <button class="ma-btn" onclick="copyText(${JSON.stringify(answer)})">📋 复制</button>
         <button class="ma-btn" onclick="regenFrom(${idx})">🔄 重新生成</button>
       </div></div>
     </div></div>`;
@@ -427,6 +533,7 @@ function buildMsgEl(m,idx){
 }
  
 function addMsgEl(m){
+  document.getElementById('welcome')?.closest('.msg-wrap')?.remove();
   const el=document.getElementById('messages');
   el.appendChild(buildMsgEl(m,history.length-1));
   scrollBottom();
@@ -434,6 +541,7 @@ function addMsgEl(m){
  
 function quick(text){document.getElementById('input').value=text;onInput();send();}
  
+// ── SEND ──
 async function send(){
   const inp=document.getElementById('input');
   const text=inp.value.trim();
@@ -453,17 +561,20 @@ async function send(){
   document.getElementById('send-btn').style.display='none';
   document.getElementById('stop-btn').style.display='flex';
  
-  let content=text;
-  if(userMsg.attachments){
-    const desc=userMsg.attachments.map(a=>
-      a.isImage?`[图片: ${a.name}]`:`[文件: ${a.name}]\n内容:\n${a.textContent||'（无法读取内容）'}`
-    ).join('\n');
-    content=desc+(text?'\n\n'+text:'');
+  // Build API content — embed file text content
+  let content = text;
+  if(userMsg.attachments && userMsg.attachments.length){
+    const desc = userMsg.attachments.map(a => {
+      if(a.isImage) return `[图片附件: ${a.name}，请根据文件名回答相关问题]`;
+      if(a.textContent) return `[文件: ${a.name}]\n以下是文件的完整内容：\n---\n${a.textContent}\n---`;
+      return `[文件: ${a.name}（无法读取内容）]`;
+    }).join('\n\n');
+    content = desc + (text ? '\n\n用户的问题是：' + text : '\n\n请分析以上文件内容，给出总结和关键信息。');
   }
  
-  const typingEl=document.createElement('div');
-  typingEl.className='msg-wrap';typingEl.id='typing';
-  typingEl.innerHTML=`<div class="msg-row ai"><div class="msg-inner"><div class="ai-av">AI</div><div class="ai-body"><div class="typing-dots"><span></span><span></span><span></span></div></div></div></div>`;
+  // Typing indicator
+  const typingEl=document.createElement('div');typingEl.className='msg-wrap';typingEl.id='typing';
+  typingEl.innerHTML=`<div class="msg-row ai"><div class="msg-inner"><div class="ai-av">${LOGO_SVG}</div><div class="ai-body"><div class="typing-dots"><span></span><span></span><span></span></div></div></div></div>`;
   document.getElementById('messages').appendChild(typingEl);scrollBottom();
  
   const apiMsgs=history.slice(0,-1).map(m=>({role:m.role,content:m.content}));
@@ -481,6 +592,7 @@ async function send(){
     const aiMsg={role:'assistant',content:'网络出错，请检查连接后重试。'};
     history.push(aiMsg);addMsgEl(aiMsg);
   }
+ 
   busy=false;
   document.getElementById('stop-btn').style.display='none';
   document.getElementById('send-btn').style.display='flex';
@@ -496,32 +608,32 @@ function stopGen(){
  
 function regenFrom(idx){
   if(busy)return;
-  // Find nearest user message at or before idx
   let userIdx=idx;
   while(userIdx>=0&&history[userIdx].role!=='user')userIdx--;
   if(userIdx<0)return;
   const lastUser=history[userIdx];
   history=history.slice(0,userIdx);
   renderMessages();
-  document.getElementById('input').value=lastUser.content;
+  document.getElementById('input').value=lastUser.content||'';
   if(lastUser.attachments)attachments=[...lastUser.attachments];
   send();
 }
  
+// ── FILE HANDLING ──
 function handleFiles(files){
   Array.from(files).forEach(file=>{
     const reader=new FileReader();
     const isImage=file.type.startsWith('image/');
-    const isText=['text/plain','text/csv','application/json'].includes(file.type)||/\.(md|txt|csv|json)$/i.test(file.name);
+    const isText=['text/plain','text/csv','application/json','text/markdown'].includes(file.type)||
+                 /\.(md|txt|csv|json)$/i.test(file.name);
     const size=file.size<1024?file.size+' B':file.size<1048576?(file.size/1024).toFixed(1)+' KB':(file.size/1048576).toFixed(1)+' MB';
     reader.onload=e=>{
       const att={name:file.name,type:file.type,isImage,size,data:e.target.result};
-      if(isText)att.textContent=e.target.result;
+      if(isText)att.textContent=e.target.result;  // ← 关键：保存文本内容
       attachments.push(att);renderAttachBar();
     };
     if(isImage)reader.readAsDataURL(file);
-    else if(isText)reader.readAsText(file);
-    else reader.readAsDataURL(file);
+    else reader.readAsText(file, 'utf-8');  // ← 始终以文本读取非图片文件
   });
   document.getElementById('file-input').value='';
 }
@@ -543,25 +655,27 @@ function removeAttach(i){
 }
  
 function fileIcon(n){
-  const m={pdf:'📄',xlsx:'📊',xls:'📊',csv:'📊',docx:'📝',doc:'📝',txt:'📃',md:'📃',json:'🔧',zip:'🗜️',png:'🖼️',jpg:'🖼️',jpeg:'🖼️'};
+  const m={csv:'📊',xlsx:'📊',txt:'📃',md:'📃',json:'🔧',png:'🖼️',jpg:'🖼️',jpeg:'🖼️'};
   return m[(n.split('.').pop()||'').toLowerCase()]||'📁';
 }
  
+// ── INPUT ──
 function onInput(){
   const inp=document.getElementById('input');
   inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,200)+'px';
   document.getElementById('send-btn').disabled=(!inp.value.trim()&&!attachments.length)||busy;
 }
- 
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
  
+// ── SCROLL ──
 function scrollBottom(){const el=document.getElementById('messages');el.scrollTop=el.scrollHeight;}
 function onScroll(){const el=document.getElementById('messages');document.getElementById('scroll-btn').classList.toggle('show',el.scrollHeight-el.scrollTop-el.clientHeight>100);}
  
+// ── SETTINGS ──
 function openSettings(){document.getElementById('settings-modal').classList.add('show');}
 function closeSettings(){document.getElementById('settings-modal').classList.remove('show');}
 function saveSettings(){
-  settings.systemPrompt=document.getElementById('system-prompt').value;
+  settings.systemPrompt=document.getElementById('system-prompt-ui').value;
   settings.fontSize=document.getElementById('font-size-sel').value;
   settings.dark=document.body.classList.contains('dark');
   localStorage.setItem('ai_settings',JSON.stringify(settings));
@@ -575,20 +689,27 @@ function toggleDark(){
   localStorage.setItem('ai_settings',JSON.stringify(settings));
 }
  
+// ── EXPORT ──
 function exportChat(){
   if(!history.length){showToast('没有可导出的对话');return;}
-  const text=history.map(m=>`【${m.role==='user'?'我':'AI'}】\n${m.content}`).join('\n\n---\n\n');
+  const text=history.map(m=>{
+    const role=m.role==='user'?'我':'星智 AI';
+    const {answer}=parseReply(m.content||'');
+    return `【${role}】\n${m.role==='user'?m.content:answer}`;
+  }).join('\n\n---\n\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));
   a.download=`对话记录_${new Date().toLocaleDateString('zh')}.txt`;
   a.click();showToast('已导出对话记录');
 }
  
+// ── UTILS ──
 function copyText(text){navigator.clipboard.writeText(text).then(()=>showToast('已复制 ✓'));}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
  
 function fmt(t){
+  if(!t)return'';
   t=t.replace(/```(\w*)\n?([\s\S]*?)```/g,(_,lang,code)=>
     `<div class="pre-header"><span>${lang||'code'}</span><button class="copy-code-btn" onclick="copyText(${JSON.stringify(code.trim())})">复制</button></div><pre><code>${esc(code.trim())}</code></pre>`);
   t=t.replace(/`([^`\n]+)`/g,'<code>$1</code>');
