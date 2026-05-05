@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>语伴 AI · 你的外语学习伙伴</title>
+<title>汉小伴 HanXiaoBan · Your Chinese Learning Companion</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f8fc;--panel:#fff;
-  --sidebar:#1e1b2e;--sidebar-hover:#2d2845;--sidebar-active:#3d3660;
-  --border:#e8eaf0;--border2:#d1d5e0;
-  --text:#1a1d2e;--text2:#6b7080;--text3:#a0a6b8;
-  --accent:#7c3aed;--accent-h:#6d28d9;--accent-light:#f0ebff;--accent-glow:rgba(124,58,237,.18);
-  --user-bubble-from:#7c3aed;--user-bubble-to:#8b5cf6;
+  --bg:#faf9f7;--panel:#fff;
+  --sidebar:#1a0a00;--sidebar-hover:#2d1500;--sidebar-active:#4a2200;
+  --border:#ede8e0;--border2:#d4c8b8;
+  --text:#1a1208;--text2:#6b5c44;--text3:#a8957c;
+  --accent:#c2410c;--accent-h:#9a3412;--accent-light:#fff4ee;--accent-glow:rgba(194,65,12,.15);
+  --gold:#d97706;--gold-light:#fffbeb;
+  --user-bubble-from:#c2410c;--user-bubble-to:#ea580c;
   --danger:#ef4444;--green:#10b981;
   --think-bg:#fffbeb;--think-border:#fbbf24;
   --shadow:0 2px 12px rgba(0,0,0,.06);--shadow-lg:0 8px 32px rgba(0,0,0,.1);
-  --radius:14px;--sidebar-w:256px;
+  --radius:14px;--sidebar-w:260px;
 }
 .dark{
-  --bg:#0f0d1a;--panel:#1a1728;
-  --sidebar:#0d0b16;--sidebar-hover:#1e1b2e;--sidebar-active:#2d2845;
-  --border:#252236;--border2:#302d45;
-  --text:#e8e4f8;--text2:#8b8aaa;--text3:#4a4870;
-  --accent-light:#2d1f4a;--accent-glow:rgba(124,58,237,.25);
-  --user-bubble-from:#6d28d9;--user-bubble-to:#7c3aed;
-  --think-bg:#1e1a0e;--think-border:#92400e;
-  --shadow:0 2px 12px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);
+  --bg:#100800;--panel:#1a0d00;
+  --sidebar:#0a0500;--sidebar-hover:#1a0a00;--sidebar-active:#2d1500;
+  --border:#2a1a08;--border2:#3d2810;
+  --text:#f0e6d8;--text2:#a08060;--text3:#5a4030;
+  --accent-light:#2d1200;--accent-glow:rgba(194,65,12,.25);
+  --gold-light:#1a1200;
+  --user-bubble-from:#9a3412;--user-bubble-to:#c2410c;
+  --think-bg:#1a1200;--think-border:#92400e;
+  --shadow:0 2px 12px rgba(0,0,0,.35);--shadow-lg:0 8px 32px rgba(0,0,0,.5);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);display:flex;font-size:15px;transition:background .25s,color .25s}
 
-/* ══ SIDEBAR ══ */
+/* SIDEBAR */
 #sidebar{width:var(--sidebar-w);background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:10}
 #sidebar.hidden{transform:translateX(-100%);width:0;overflow:hidden}
 #sidebar-brand{padding:20px 16px 14px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.06)}
-.brand-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(124,58,237,.4);flex-shrink:0}
-.brand-name{font-size:15px;font-weight:700;color:#fff}
-.brand-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px}
+.brand-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#c2410c,#ea580c);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(194,65,12,.4);flex-shrink:0;font-size:20px}
+.brand-name{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em}
+.brand-name-cn{font-size:12px;color:rgba(255,255,255,.4);margin-top:1px}
 #sidebar-top{padding:12px 10px 6px;display:flex;flex-direction:column;gap:7px}
 #new-btn{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.8);font-size:13px;font-family:inherit;cursor:pointer;transition:.15s;width:100%}
 #new-btn:hover{background:rgba(255,255,255,.1);color:#fff}
@@ -61,41 +63,43 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .sf-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.4);transition:.12s;user-select:none}
 .sf-btn:hover{background:var(--sidebar-hover);color:rgba(255,255,255,.75)}
 
-/* ══ MAIN ══ */
+/* MAIN */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 #topbar{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0}
 #toggle-sidebar{background:none;border:none;cursor:pointer;color:var(--text2);padding:6px;border-radius:8px;display:flex;align-items:center;transition:.12s}
 #toggle-sidebar:hover{background:var(--accent-light);color:var(--accent)}
 #topbar-center{flex:1;display:flex;align-items:center;gap:8px;overflow:hidden}
 #topbar-title{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lang-badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;background:var(--accent-light);color:var(--accent);white-space:nowrap;flex-shrink:0;border:1px solid rgba(124,58,237,.2)}
+.level-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--gold-light);color:var(--gold);white-space:nowrap;flex-shrink:0;border:1px solid rgba(217,119,6,.2)}
 .tb-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--border2);border-radius:9px;cursor:pointer;color:var(--text2);padding:6px 12px;font-size:12px;font-family:inherit;transition:.15s;white-space:nowrap}
 .tb-btn:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
-/* CALL BUTTON in topbar */
-#call-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#10b981,#059669);border:none;border-radius:9px;cursor:pointer;color:#fff;padding:7px 14px;font-size:12px;font-weight:600;font-family:inherit;transition:.15s;white-space:nowrap;box-shadow:0 3px 10px rgba(16,185,129,.3)}
-#call-btn:hover{background:linear-gradient(135deg,#059669,#047857);transform:scale(1.03)}
+#call-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#c2410c,#ea580c);border:none;border-radius:9px;cursor:pointer;color:#fff;padding:7px 14px;font-size:12px;font-weight:600;font-family:inherit;transition:.15s;white-space:nowrap;box-shadow:0 3px 10px rgba(194,65,12,.3)}
+#call-btn:hover{transform:scale(1.03);box-shadow:0 5px 16px rgba(194,65,12,.4)}
 
+/* MODE BAR */
 #mode-bar{display:flex;gap:5px;padding:10px 20px 8px;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
 #mode-bar::-webkit-scrollbar{display:none}
 .mode-btn{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;background:transparent;color:var(--text2);transition:.15s;white-space:nowrap}
 .mode-btn:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
 .mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 8px var(--accent-glow)}
 
-/* ══ MESSAGES ══ */
+/* MESSAGES */
 #messages{flex:1;overflow-y:auto;padding:28px 0 12px;scroll-behavior:smooth;background:var(--bg)}
 #messages::-webkit-scrollbar{width:5px}
 #messages::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 .msg-wrap{max-width:780px;margin:0 auto;padding:0 24px}
+
+/* WELCOME */
 #welcome{padding:16px 0 28px}
 .welcome-hero{text-align:center;padding:36px 24px;background:var(--panel);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:24px}
-.welcome-logo-ring{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 24px rgba(124,58,237,.35)}
-.welcome-hero h1{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-.02em}
-.welcome-hero h1 span{background:linear-gradient(135deg,#7c3aed,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.welcome-logo-ring{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#c2410c,#ea580c);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 24px rgba(194,65,12,.35);font-size:36px}
+.welcome-hero h1{font-size:26px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+.welcome-hero h1 .cn{background:linear-gradient(135deg,#c2410c,#ea580c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .welcome-hero p{color:var(--text2);font-size:14px;line-height:1.65;margin-bottom:18px}
-.call-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:24px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;box-shadow:0 4px 16px rgba(16,185,129,.35);transition:.15s;margin-bottom:16px}
-.call-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,.4)}
-.lang-pills{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
-.lang-pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;background:var(--accent-light);color:var(--accent);border:1px solid rgba(124,58,237,.15)}
+.call-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:24px;background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;box-shadow:0 4px 16px rgba(194,65,12,.35);transition:.15s;margin-bottom:18px}
+.call-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(194,65,12,.45)}
+.user-pills{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.user-pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;background:var(--gold-light);color:var(--gold);border:1px solid rgba(217,119,6,.2)}
 .sug-section-label{font-size:11px;font-weight:700;color:var(--text3);margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase}
 .sug-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .sug-card{border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:.18s;background:var(--panel);box-shadow:var(--shadow)}
@@ -109,29 +113,39 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .msg-group{margin-bottom:20px;animation:fadeUp .2s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .msg-user{display:flex;justify-content:flex-end;gap:10px;align-items:flex-end;margin-bottom:4px}
-.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.user-bubble{background:linear-gradient(135deg,var(--user-bubble-from),var(--user-bubble-to));color:#fff;padding:11px 16px;border-radius:18px 18px 4px 18px;font-size:15px;line-height:1.65;max-width:82%;word-break:break-word;white-space:pre-wrap;box-shadow:0 4px 14px rgba(124,58,237,.28)}
+.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.user-bubble{background:linear-gradient(135deg,var(--user-bubble-from),var(--user-bubble-to));color:#fff;padding:11px 16px;border-radius:18px 18px 4px 18px;font-size:15px;line-height:1.65;max-width:82%;word-break:break-word;white-space:pre-wrap;box-shadow:0 4px 14px rgba(194,65,12,.28)}
 .msg-ai{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:flex-start;margin-bottom:4px}
-.ai-av{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(124,58,237,.3);flex-shrink:0;margin-top:2px}
+.ai-av{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#c2410c,#ea580c);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(194,65,12,.3);flex-shrink:0;margin-top:2px;font-size:20px}
 .ai-content-wrap{background:var(--panel);border:1px solid var(--border);border-radius:18px 18px 18px 4px;padding:14px 18px;box-shadow:var(--shadow);min-width:0;word-break:break-word}
 .ai-body{font-size:15px;line-height:1.78;color:var(--text)}
 .ai-body p{margin-bottom:10px}.ai-body p:last-child{margin-bottom:0}
-.ai-body strong{font-weight:600}.ai-body em{font-style:italic;color:var(--accent)}
-.ai-body ul,.ai-body ol{padding-left:22px;margin-bottom:10px}.ai-body li{margin-bottom:5px;line-height:1.6}
+.ai-body strong{font-weight:600}
+.ai-body em{font-style:italic;color:var(--accent)}
+.ai-body ul,.ai-body ol{padding-left:22px;margin-bottom:10px}
+.ai-body li{margin-bottom:5px;line-height:1.6}
 .ai-body h3{font-size:15px;font-weight:600;color:var(--accent);margin:14px 0 6px}
 .ai-body h2{font-size:17px;font-weight:600;margin:14px 0 6px}
 .ai-body blockquote{border-left:3px solid var(--accent);padding:8px 14px;color:var(--text2);margin:10px 0;background:var(--accent-light);border-radius:0 10px 10px 0}
 .ai-body table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px;border-radius:8px;overflow:hidden}
 .ai-body th,.ai-body td{border:1px solid var(--border);padding:9px 13px;text-align:left}
 .ai-body th{background:var(--accent-light);font-weight:600;color:var(--accent);font-size:13px}
-.ai-body code{background:var(--accent-light);color:var(--accent);border:1px solid rgba(124,58,237,.15);padding:1px 6px;border-radius:5px;font-size:13px;font-family:'SF Mono','Consolas',monospace}
+.ai-body code{background:var(--accent-light);color:var(--accent);border:1px solid rgba(194,65,12,.15);padding:2px 7px;border-radius:6px;font-size:14px;font-family:inherit}
 .code-block-wrap{margin:12px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
-.code-header{display:flex;align-items:center;justify-content:space-between;background:#1e1b2e;padding:8px 14px}
-.code-lang{font-size:12px;color:#a78bfa;font-weight:600;font-family:monospace}
-.copy-code-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#a0a6b8;cursor:pointer;font-size:11px;padding:3px 9px;border-radius:6px;font-family:inherit;transition:.12s}
+.code-header{display:flex;align-items:center;justify-content:space-between;background:#1a0800;padding:8px 14px}
+.code-lang{font-size:12px;color:#fb923c;font-weight:600}
+.copy-code-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#a0a6b8;cursor:pointer;font-size:11px;padding:3px 9px;border-radius:6px;font-family:inherit}
 .copy-code-btn:hover{background:rgba(255,255,255,.15);color:#fff}
-.ai-body pre{background:#0f0d1a;color:#e2e0f0;padding:16px;font-size:13px;font-family:'SF Mono','Consolas',monospace;overflow-x:auto;line-height:1.65;margin:0}
+.ai-body pre{background:#100500;color:#f0e0c0;padding:16px;font-size:13px;font-family:'SF Mono','Consolas',monospace;overflow-x:auto;line-height:1.65;margin:0}
 .ai-body pre code{background:none;border:none;padding:0;color:inherit}
+
+/* PINYIN CARD */
+.pinyin-card{background:var(--gold-light);border:1px solid rgba(217,119,6,.25);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.pinyin-card .pc-char{font-size:36px;font-weight:700;color:var(--text);line-height:1.2}
+.pinyin-card .pc-pinyin{font-size:18px;color:var(--gold);font-weight:500;margin-bottom:4px}
+.pinyin-card .pc-meaning{font-size:14px;color:var(--text2);line-height:1.6}
+
+/* THINK BLOCK */
 .think-block{border:1px solid var(--think-border);border-radius:10px;margin-bottom:14px;overflow:hidden;background:var(--think-bg)}
 .think-header{display:flex;align-items:center;gap:8px;padding:8px 13px;cursor:pointer;user-select:none;font-size:12px;font-weight:600;color:#92400e;transition:.12s}
 .dark .think-header{color:#fbbf24}
@@ -141,26 +155,28 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .think-body{padding:0 13px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
 .think-body.open{max-height:400px;padding:6px 13px 12px}
 .think-body p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:4px}
+
+/* MSG ACTIONS */
 .msg-actions{display:flex;gap:3px;margin-top:8px;opacity:0;transition:.15s}
 .msg-group:hover .msg-actions{opacity:1}
 .ma-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:4px 8px;border-radius:7px;font-size:11px;font-weight:500;display:flex;align-items:center;gap:3px;font-family:inherit;transition:.12s}
 .ma-btn:hover{background:var(--accent-light);color:var(--accent)}
-.attach-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px;justify-content:flex-end}
-.attach-chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:6px 11px;font-size:12px;color:#fff}
+
+/* TYPING */
 .typing-indicator{display:flex;gap:5px;padding:8px 2px;align-items:center}
 .typing-indicator span{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.5;animation:tblink 1.3s infinite;display:inline-block}
 .typing-indicator span:nth-child(2){animation-delay:.2s}
 .typing-indicator span:nth-child(3){animation-delay:.4s}
 @keyframes tblink{0%,60%,100%{opacity:.25;transform:scale(.75)}30%{opacity:.9;transform:scale(1)}}
 
-/* ══ INPUT ══ */
+/* INPUT */
 #input-area{padding:12px 20px 16px;flex-shrink:0;background:var(--bg);border-top:1px solid var(--border)}
 #input-box{max-width:780px;margin:0 auto;background:var(--panel);border:1.5px solid var(--border2);border-radius:18px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s;overflow:hidden}
 #input-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow),var(--shadow)}
 #attach-preview-bar{display:none;flex-wrap:wrap;gap:7px;padding:10px 14px 0}
 #attach-preview-bar.show{display:flex}
-.ap-chip{display:flex;align-items:center;gap:6px;background:var(--accent-light);border:1px solid rgba(124,58,237,.2);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--accent)}
-.ap-chip-rm{background:none;border:none;cursor:pointer;color:var(--accent);font-size:14px;line-height:1;padding:0 2px;margin-left:2px;opacity:.6;transition:.12s}
+.ap-chip{display:flex;align-items:center;gap:6px;background:var(--accent-light);border:1px solid rgba(194,65,12,.2);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--accent)}
+.ap-chip-rm{background:none;border:none;cursor:pointer;color:var(--accent);font-size:14px;line-height:1;padding:0 2px;margin-left:2px;opacity:.6}
 .ap-chip-rm:hover{opacity:1}
 #input-row{display:flex;align-items:flex-end;gap:8px;padding:10px 12px}
 #input{flex:1;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:var(--text);resize:none;min-height:26px;max-height:180px;line-height:1.6;padding:0}
@@ -168,98 +184,54 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .ib-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:6px;border-radius:9px;display:flex;align-items:center;transition:.15s;flex-shrink:0}
 .ib-btn:hover{background:var(--accent-light);color:var(--accent)}
 #file-input{display:none}
-#mic-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:6px;border-radius:9px;display:flex;align-items:center;transition:.15s;flex-shrink:0;position:relative}
+#mic-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:6px;border-radius:9px;display:flex;align-items:center;transition:.15s;flex-shrink:0}
 #mic-btn:hover{background:var(--accent-light);color:var(--accent)}
 #mic-btn.recording{color:#fff;background:var(--danger);animation:mic-pulse .9s infinite}
 @keyframes mic-pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
-#send-btn{width:38px;height:38px;border-radius:11px;border:none;background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;box-shadow:0 4px 12px rgba(124,58,237,.35)}
+#send-btn{width:38px;height:38px;border-radius:11px;border:none;background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;box-shadow:0 4px 12px rgba(194,65,12,.35)}
 #send-btn:hover{transform:scale(1.05)}
 #send-btn:disabled{background:var(--border2);box-shadow:none;transform:none;cursor:default}
-#stop-btn{width:38px;height:38px;border-radius:11px;border:1.5px solid var(--border2);background:none;color:var(--text2);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
+#stop-btn{width:38px;height:38px;border-radius:11px;border:1.5px solid var(--border2);background:none;color:var(--text2);cursor:pointer;display:none;align-items:center;justify-content:center;flex-shrink:0}
 #stop-btn:hover{background:var(--accent-light);color:var(--danger);border-color:var(--danger)}
 #input-footer{max-width:780px;margin:6px auto 0;display:flex;align-items:center;justify-content:space-between;padding:0 4px}
 #input-hint{font-size:11px;color:var(--text3)}
 #voice-status{font-size:11px;color:var(--danger);font-weight:500;display:none}
 #voice-status.show{display:block}
 
-/* ══ CALL MODAL ══ */
-#call-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.75);
-  backdrop-filter:blur(16px);z-index:200;
-  display:none;align-items:center;justify-content:center;
-}
+/* CALL OVERLAY */
+#call-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(18px);z-index:200;display:none;align-items:center;justify-content:center}
 #call-overlay.show{display:flex}
-#call-panel{
-  width:360px;max-width:92vw;
-  background:linear-gradient(160deg,#1e1b2e,#0f0d1a);
-  border:1px solid rgba(124,58,237,.3);
-  border-radius:28px;padding:40px 32px 36px;
-  text-align:center;
-  box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 1px rgba(124,58,237,.15);
-}
-.call-avatar-ring{
-  width:96px;height:96px;border-radius:28px;
-  background:linear-gradient(135deg,#7c3aed,#a855f7);
-  display:inline-flex;align-items:center;justify-content:center;
-  margin-bottom:20px;position:relative;
-  box-shadow:0 12px 36px rgba(124,58,237,.5);
-}
-.call-avatar-ring.speaking{animation:avatar-pulse 1.2s ease-in-out infinite}
-@keyframes avatar-pulse{0%,100%{box-shadow:0 12px 36px rgba(124,58,237,.5),0 0 0 0 rgba(124,58,237,.4)}50%{box-shadow:0 12px 36px rgba(124,58,237,.7),0 0 0 16px rgba(124,58,237,0)}}
-.call-avatar-ring.listening{animation:avatar-listen 1s ease-in-out infinite}
-@keyframes avatar-listen{0%,100%{box-shadow:0 12px 36px rgba(239,68,68,.5),0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 12px 36px rgba(239,68,68,.7),0 0 0 14px rgba(239,68,68,0)};background:linear-gradient(135deg,#ef4444,#f97316)}
-#call-name{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
-#call-status{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:6px;min-height:20px}
-#call-lang-select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:7px 12px;font-size:13px;color:#fff;font-family:inherit;outline:none;cursor:pointer;margin-bottom:24px;width:100%}
-#call-lang-select option{background:#1e1b2e;color:#fff}
-
-/* Waveform bars */
-#waveform{display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin-bottom:24px}
-.wave-bar{width:4px;border-radius:3px;background:rgba(124,58,237,.4);transition:height .1s}
-.wave-bar.active{background:linear-gradient(to top,#7c3aed,#a855f7)}
-
-/* Transcript area */
-#call-transcript{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;padding:14px;margin-bottom:24px;
-  min-height:64px;max-height:120px;overflow-y:auto;
-  font-size:13px;color:rgba(255,255,255,.7);
-  line-height:1.6;text-align:left;
-}
+#call-panel{width:370px;max-width:92vw;background:linear-gradient(160deg,#1a0800,#0a0300);border:1px solid rgba(194,65,12,.3);border-radius:28px;padding:40px 32px 36px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(194,65,12,.12)}
+.call-avatar-ring{width:96px;height:96px;border-radius:28px;background:linear-gradient(135deg,#c2410c,#ea580c);display:inline-flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:44px;position:relative;box-shadow:0 12px 36px rgba(194,65,12,.5)}
+.call-avatar-ring.speaking{animation:av-speak 1.2s ease-in-out infinite}
+@keyframes av-speak{0%,100%{box-shadow:0 12px 36px rgba(194,65,12,.5),0 0 0 0 rgba(194,65,12,.4)}50%{box-shadow:0 12px 36px rgba(194,65,12,.7),0 0 0 16px rgba(194,65,12,0)}}
+.call-avatar-ring.listening{animation:av-listen 1s ease-in-out infinite}
+@keyframes av-listen{0%,100%{box-shadow:0 12px 36px rgba(239,68,68,.5),0 0 0 0 rgba(239,68,68,.3)}50%{box-shadow:0 12px 36px rgba(239,68,68,.7),0 0 0 14px rgba(239,68,68,0)}}
+#call-name{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+#call-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:6px}
+#call-status{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:8px;min-height:20px}
+#call-lang-select{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;font-size:13px;color:#fff;font-family:inherit;outline:none;cursor:pointer;margin-bottom:20px;width:100%}
+#call-lang-select option{background:#1a0800;color:#fff}
+#waveform{display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin-bottom:20px}
+.wave-bar{width:4px;border-radius:3px;background:rgba(194,65,12,.3);transition:height .1s}
+.wave-bar.active{background:linear-gradient(to top,#c2410c,#ea580c)}
+#call-transcript{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px;margin-bottom:22px;min-height:64px;max-height:130px;overflow-y:auto;font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;text-align:left}
 #call-transcript::-webkit-scrollbar{width:3px}
 #call-transcript::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-.transcript-you{color:#a78bfa;font-weight:500}
-.transcript-ai{color:rgba(255,255,255,.8)}
-
-/* Call controls */
 #call-controls{display:flex;align-items:center;justify-content:center;gap:16px}
-.ctrl-btn{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  cursor:pointer;transition:.15s;user-select:none;
-}
-.ctrl-btn-icon{
-  width:52px;height:52px;border-radius:50%;border:none;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;cursor:pointer;transition:.15s;
-}
+.ctrl-btn{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.ctrl-btn-icon{width:52px;height:52px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:.15s}
 .ctrl-btn-icon:hover{transform:scale(1.07)}
-.ctrl-btn-label{font-size:11px;color:rgba(255,255,255,.45)}
-#btn-mute-call .ctrl-btn-icon{background:rgba(255,255,255,.12)}
+.ctrl-btn-label{font-size:11px;color:rgba(255,255,255,.4)}
+#btn-mute-call .ctrl-btn-icon{background:rgba(255,255,255,.1)}
 #btn-mute-call.muted .ctrl-btn-icon{background:rgba(239,68,68,.3)}
 #btn-hangup .ctrl-btn-icon{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 4px 16px rgba(239,68,68,.4)}
-#btn-speaker .ctrl-btn-icon{background:rgba(255,255,255,.12)}
+#btn-speaker .ctrl-btn-icon{background:rgba(255,255,255,.1)}
 #btn-speaker.off .ctrl-btn-icon{background:rgba(239,68,68,.2)}
-.call-start-btn{
-  width:72px;height:72px;border-radius:50%;border:none;
-  background:linear-gradient(135deg,#10b981,#059669);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;cursor:pointer;
-  box-shadow:0 6px 24px rgba(16,185,129,.5);
-  transition:.15s;
-}
-.call-start-btn:hover{transform:scale(1.06);box-shadow:0 8px 28px rgba(16,185,129,.6)}
+.call-start-btn{width:72px;height:72px;border-radius:50%;border:none;background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;box-shadow:0 6px 24px rgba(194,65,12,.5);transition:.15s}
+.call-start-btn:hover{transform:scale(1.06)}
 
-/* Modal & misc */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:24px;width:440px;max-width:90vw;box-shadow:var(--shadow-lg)}
@@ -276,10 +248,10 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .toggle.on::after{left:22px}
 select.sel{background:var(--panel);border:1px solid var(--border2);border-radius:8px;padding:7px 11px;font-size:13px;color:var(--text);font-family:inherit;outline:none;cursor:pointer}
 .modal-footer{margin-top:18px;display:flex;justify-content:flex-end;gap:8px}
-.btn{padding:9px 18px;border-radius:10px;font-size:14px;font-family:inherit;cursor:pointer;border:1px solid var(--border2);background:var(--hover,#f0ebff);color:var(--text);font-weight:500;transition:.12s}
-.btn.primary{background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(124,58,237,.3)}
+.btn{padding:9px 18px;border-radius:10px;font-size:14px;font-family:inherit;cursor:pointer;border:1px solid var(--border2);background:var(--accent-light);color:var(--text);font-weight:500}
+.btn.primary{background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(194,65,12,.3)}
 .btn.danger{background:var(--danger);color:#fff;border-color:transparent}
-#scroll-btn{position:fixed;bottom:110px;right:28px;background:var(--panel);border:1px solid var(--border2);border-radius:50%;width:38px;height:38px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-lg);color:var(--accent);z-index:10;font-size:18px;transition:.15s}
+#scroll-btn{position:fixed;bottom:110px;right:28px;background:var(--panel);border:1px solid var(--border2);border-radius:50%;width:38px;height:38px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-lg);color:var(--accent);z-index:10;font-size:18px}
 #scroll-btn.show{display:flex}
 #scroll-btn:hover{background:var(--accent-light)}
 #toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--panel);padding:9px 18px;border-radius:22px;font-size:13px;font-weight:500;opacity:0;transition:.25s;z-index:300;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
@@ -299,105 +271,121 @@ select.sel{background:var(--panel);border:1px solid var(--border2);border-radius
 <!-- SIDEBAR -->
 <div id="sidebar">
   <div id="sidebar-brand">
-    <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4v-4z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div><div class="brand-name">语伴 AI</div><div class="brand-sub">外语学习伙伴</div></div>
+    <div class="brand-icon">🐼</div>
+    <div>
+      <div class="brand-name">汉小伴</div>
+      <div class="brand-name-cn">HanXiaoBan · Learn Chinese</div>
+    </div>
   </div>
   <div id="sidebar-top">
     <button id="new-btn" onclick="newChat()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新建对话
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Conversation
     </button>
     <div class="sb-search">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity=".4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input placeholder="搜索对话…" oninput="renderSidebar(this.value)">
+      <input placeholder="Search conversations…" oninput="renderSidebar(this.value)">
     </div>
   </div>
   <div id="conv-list"></div>
   <div id="sidebar-footer">
-    <div class="sf-btn" onclick="openSettings()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>设置</div>
-    <div class="sf-btn" onclick="clearAll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>清除所有对话</div>
+    <div class="sf-btn" onclick="openSettings()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </div>
+    <div class="sf-btn" onclick="clearAll()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+      Clear All
+    </div>
   </div>
 </div>
 
 <!-- MAIN -->
 <div id="main">
   <div id="topbar">
-    <button id="toggle-sidebar" onclick="toggleSidebar()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <button id="toggle-sidebar" onclick="toggleSidebar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div id="topbar-center">
-      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4v-4z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <span id="topbar-title" style="font-weight:700">语伴 AI</span>
-      <span class="lang-badge">🌐 多语种</span>
+      <span style="font-size:22px">🐼</span>
+      <span id="topbar-title" style="font-weight:700">汉小伴 HanXiaoBan</span>
+      <span class="level-badge">🀄 Chinese Learning AI</span>
     </div>
-    <button id="call-btn" onclick="openCall()">📞 语音通话</button>
-    <button class="tb-btn" onclick="exportChat()">导出</button>
-    <button class="tb-btn" onclick="openSettings()">⚙ 设置</button>
+    <button id="call-btn" onclick="openCall()">📞 Voice Call</button>
+    <button class="tb-btn" onclick="exportChat()">Export</button>
+    <button class="tb-btn" onclick="openSettings()">⚙ Settings</button>
   </div>
+
   <div id="mode-bar">
-    <button class="mode-btn active" data-mode="general"   onclick="switchMode('general',this)">💬 自由对话</button>
-    <button class="mode-btn" data-mode="correct"  onclick="switchMode('correct',this)">✍️ 语法纠错</button>
-    <button class="mode-btn" data-mode="translate" onclick="switchMode('translate',this)">🔄 翻译解析</button>
-    <button class="mode-btn" data-mode="speak"    onclick="switchMode('speak',this)">🗣️ 口语练习</button>
-    <button class="mode-btn" data-mode="vocab"    onclick="switchMode('vocab',this)">📖 词汇讲解</button>
-    <button class="mode-btn" data-mode="culture"  onclick="switchMode('culture',this)">🌏 文化背景</button>
+    <button class="mode-btn active" data-mode="chat"      onclick="switchMode('chat',this)">💬 Free Chat</button>
+    <button class="mode-btn" data-mode="tones"     onclick="switchMode('tones',this)">🎵 Tone Practice</button>
+    <button class="mode-btn" data-mode="hsk"       onclick="switchMode('hsk',this)">📝 HSK Prep</button>
+    <button class="mode-btn" data-mode="characters" onclick="switchMode('characters',this)">🖊️ Characters</button>
+    <button class="mode-btn" data-mode="grammar"   onclick="switchMode('grammar',this)">📐 Grammar</button>
+    <button class="mode-btn" data-mode="culture"   onclick="switchMode('culture',this)">🏮 Culture</button>
   </div>
+
   <div id="messages" onscroll="onScroll()"></div>
+
   <div id="input-area">
     <div id="input-box">
       <div id="attach-preview-bar"></div>
       <div id="input-row">
-        <button class="ib-btn" onclick="document.getElementById('file-input').click()" title="上传文件"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+        <button class="ib-btn" onclick="document.getElementById('file-input').click()" title="Upload file">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+        </button>
         <input type="file" id="file-input" multiple accept=".txt,.csv,.md,.json" onchange="handleFiles(this.files)">
-        <textarea id="input" rows="1" oninput="onInput()" onkeydown="onKey(event)" placeholder="发送消息，或点击麦克风语音输入…"></textarea>
-        <button id="mic-btn" onclick="toggleMic()" title="语音输入（单次）"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
-        <button id="stop-btn" onclick="stopGen()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/></svg></button>
-        <button id="send-btn" onclick="send()" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+        <textarea id="input" rows="1" oninput="onInput()" onkeydown="onKey(event)" placeholder="Type in Chinese or English, or click 🎙️ to speak…"></textarea>
+        <button id="mic-btn" onclick="toggleMic()" title="Voice input">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button id="stop-btn" onclick="stopGen()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+        </button>
+        <button id="send-btn" onclick="send()" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        </button>
       </div>
     </div>
     <div id="input-footer">
-      <span id="input-hint">💬 自由对话 · Enter 发送 · 🎙️ 麦克风语音输入 · 📞 通话模式</span>
-      <span id="voice-status">🎙️ 正在聆听…</span>
+      <span id="input-hint">💬 Free Chat · Enter to send · 🎙️ mic for voice · 📞 Voice Call practice</span>
+      <span id="voice-status">🎙️ Listening…</span>
     </div>
   </div>
 </div>
 
-<!-- ══ CALL OVERLAY ══ -->
+<!-- CALL OVERLAY -->
 <div id="call-overlay">
   <div id="call-panel">
-    <div class="call-avatar-ring" id="call-avatar">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4v-4z" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div id="call-name">语伴 AI</div>
-    <div id="call-status">选择语言，点击接听开始通话</div>
+    <div class="call-avatar-ring" id="call-avatar">🐼</div>
+    <div id="call-name">汉小伴 HanXiaoBan</div>
+    <div id="call-sub">Your Chinese Teacher</div>
+    <div id="call-status">Select your language, then tap 📞 to start</div>
     <select id="call-lang-select">
-      <option value="zh-CN">🇨🇳 中文（普通话）</option>
-      <option value="en-US" selected>🇺🇸 English (US)</option>
-      <option value="en-GB">🇬🇧 English (UK)</option>
-      <option value="ja-JP">🇯🇵 日本語</option>
-      <option value="ko-KR">🇰🇷 한국어</option>
-      <option value="fr-FR">🇫🇷 Français</option>
-      <option value="es-ES">🇪🇸 Español</option>
-      <option value="de-DE">🇩🇪 Deutsch</option>
+      <option value="en-US" selected>🇺🇸 I speak English</option>
+      <option value="ja-JP">🇯🇵 I speak Japanese / 私は日本語を話します</option>
+      <option value="ko-KR">🇰🇷 I speak Korean / 저는 한국어를 합니다</option>
+      <option value="fr-FR">🇫🇷 I speak French / Je parle français</option>
+      <option value="es-ES">🇪🇸 I speak Spanish / Hablo español</option>
+      <option value="de-DE">🇩🇪 I speak German / Ich spreche Deutsch</option>
     </select>
-    <!-- Waveform -->
     <div id="waveform"></div>
-    <!-- Transcript -->
-    <div id="call-transcript"><span style="color:rgba(255,255,255,.3);font-size:13px">通话内容将显示在这里…</span></div>
-    <!-- Controls: before call -->
+    <div id="call-transcript"><span style="color:rgba(255,255,255,.3);font-size:13px">Conversation will appear here…</span></div>
     <div id="pre-call-controls">
       <button class="call-start-btn" onclick="startCall()">📞</button>
     </div>
-    <!-- Controls: during call -->
     <div id="call-controls" style="display:none">
       <div class="ctrl-btn" id="btn-mute-call" onclick="toggleCallMute()">
         <button class="ctrl-btn-icon">🎙️</button>
-        <span class="ctrl-btn-label">静音</span>
+        <span class="ctrl-btn-label">Mute</span>
       </div>
       <div class="ctrl-btn" id="btn-hangup" onclick="endCall()">
         <button class="ctrl-btn-icon">📵</button>
-        <span class="ctrl-btn-label">挂断</span>
+        <span class="ctrl-btn-label">Hang up</span>
       </div>
       <div class="ctrl-btn" id="btn-speaker" onclick="toggleSpeaker()">
         <button class="ctrl-btn-icon">🔊</button>
-        <span class="ctrl-btn-label">扬声器</span>
+        <span class="ctrl-btn-label">Speaker</span>
       </div>
     </div>
   </div>
@@ -406,17 +394,17 @@ select.sel{background:var(--panel);border:1px solid var(--border2);border-radius
 <!-- Settings -->
 <div class="modal-overlay" id="settings-modal">
   <div class="modal">
-    <h2>设置 <button class="modal-close" onclick="closeSettings()">×</button></h2>
-    <div class="setting-row"><div><div class="setting-label">深色模式</div></div><button class="toggle" id="dark-toggle" onclick="toggleDark()"></button></div>
-    <div class="setting-row"><div><div class="setting-label">字体大小</div></div><select class="sel" id="font-size-sel" onchange="document.body.style.fontSize=this.value+'px'"><option value="14">小</option><option value="15" selected>中</option><option value="16">大</option><option value="17">超大</option></select></div>
-    <div class="modal-footer"><button class="btn" onclick="closeSettings()">取消</button><button class="btn primary" onclick="saveSettings()">保存</button></div>
+    <h2>Settings <button class="modal-close" onclick="closeSettings()">×</button></h2>
+    <div class="setting-row"><div><div class="setting-label">Dark Mode</div></div><button class="toggle" id="dark-toggle" onclick="toggleDark()"></button></div>
+    <div class="setting-row"><div><div class="setting-label">Font Size</div></div><select class="sel" id="font-size-sel" onchange="document.body.style.fontSize=this.value+'px'"><option value="14">Small</option><option value="15" selected>Medium</option><option value="16">Large</option><option value="17">X-Large</option></select></div>
+    <div class="modal-footer"><button class="btn" onclick="closeSettings()">Cancel</button><button class="btn primary" onclick="saveSettings()">Save</button></div>
   </div>
 </div>
 <div class="modal-overlay" id="clear-modal">
   <div class="modal">
-    <h2>确认清除</h2>
-    <p style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6">确定要删除所有对话记录吗？</p>
-    <div class="modal-footer"><button class="btn" onclick="document.getElementById('clear-modal').classList.remove('show')">取消</button><button class="btn danger" onclick="confirmClearAll()">确认删除</button></div>
+    <h2>Clear All Chats</h2>
+    <p style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6">This will delete all conversation history. Cannot be undone.</p>
+    <div class="modal-footer"><button class="btn" onclick="document.getElementById('clear-modal').classList.remove('show')">Cancel</button><button class="btn danger" onclick="confirmClearAll()">Delete All</button></div>
   </div>
 </div>
 
@@ -424,41 +412,122 @@ select.sel{background:var(--panel);border:1px solid var(--border2);border-radius
 <div id="toast"></div>
 
 <script>
-// ── STATE ──
-let convs=JSON.parse(localStorage.getItem('yuban_convs')||'[]');
+let convs=JSON.parse(localStorage.getItem('hanxiaoban_convs')||'[]');
 let activeId=null,history=[],attachments=[],busy=false;
-let settings=JSON.parse(localStorage.getItem('yuban_settings')||'{}');
-let currentMode='general';
-
-// Speech
+let settings=JSON.parse(localStorage.getItem('hanxiaoban_settings')||'{}');
+let currentMode='chat';
 let recognition=null,isRecording=false;
 let synth=window.speechSynthesis;
 let callActive=false,callMuted=false,speakerOn=true;
-let callRecognition=null,callBusy=false;
-let waveInterval=null;
+let callRecognition=null,callBusy=false,waveInterval=null;
 
-const AI_AV=`<div class="ai-av"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4v-4z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+const AI_AV=`<div class="ai-av">🐼</div>`;
 
 const MODES={
-  general:{label:'💬 自由对话',hint:'💬 自由对话 · Enter发送 · 🎙️麦克风 · 📞通话模式',placeholder:'用任何语言提问，或直接用外语和我对话…',
-    prompt:`你是「语伴AI」，专门服务外语学习者的智能语言学习伙伴，支持英、日、韩、法、西班牙语等多语种。先用<think>标签写2-3句分析思路，再给出结构清晰、举例丰富的正式回答。`},
-  correct:{label:'✍️ 语法纠错',hint:'✍️ 语法纠错 · 输入或说出你写的外语句子',placeholder:'粘贴你写的英语/日语/韩语句子，我帮你纠错…',
-    prompt:`你是「语伴AI」语法纠错专家。先用<think>分析错误，然后按格式输出：## 🔍 纠错报告\n**原文：** xxx\n**修正后：** xxx\n### 错误详情\n| 序号 | 错误 | 正确 | 说明 |\n### 💡 学习建议`},
-  translate:{label:'🔄 翻译解析',hint:'🔄 翻译解析 · 输入或说出要翻译的内容',placeholder:'输入想翻译的句子（支持任意语言互译）…',
-    prompt:`你是「语伴AI」翻译解析专家。先用<think>分析语言和难点，然后输出：## 🔄 翻译结果\n**原文：** xxx\n**译文：** xxx\n### 📐 句子结构\n### 💎 关键词汇\n| 词汇 | 词性 | 含义 | 用法 |\n### 🌟 表达技巧`},
-  speak:{label:'🗣️ 口语练习',hint:'🗣️ 口语练习 · 推荐使用📞通话模式来练习！',placeholder:'告诉我想练习的语言和场景，例如：练习英语购物对话…',
-    prompt:`你是「语伴AI」口语练习教练。先用<think>设计场景策略，然后扮演角色用目标语言对话。每次用户回复后：继续对话，在末尾用【语言点】标注可改进的表达，给出更地道说法。`},
-  vocab:{label:'📖 词汇讲解',hint:'📖 词汇讲解 · 输入不懂的单词或词组',placeholder:'输入想学的单词、词组或短语（任何语言）…',
-    prompt:`你是「语伴AI」词汇讲解专家。先用<think>分析学习重点，然后输出：## 📖 [词汇]\n**基本释义：** xxx\n### 🎯 核心用法\n[3-5个例句中外对照]\n### ⚠️ 易混淆词\n### 🌍 文化/语境提示\n### 📝 记忆技巧`},
-  culture:{label:'🌏 文化背景',hint:'🌏 文化背景 · 探索语言背后的文化世界',placeholder:'问任何关于语言文化的问题…',
-    prompt:`你是「语伴AI」跨文化交际专家。先用<think>分析文化核心，然后结合例子解答，对比中文母语者可能的文化误解，给出实用建议，语气亲切生动。`}
+  chat:{
+    label:'💬 Free Chat',
+    hint:'💬 Free Chat · Enter to send · 🎙️ mic · 📞 voice call',
+    placeholder:'Ask anything in English or Chinese! e.g. "How do you say hello in Chinese?"',
+    prompt:`You are 汉小伴 (HanXiaoBan), a warm and encouraging AI Chinese teacher. Your students are people learning Mandarin Chinese as a foreign language — including overseas university students, HSK candidates, overseas Chinese children, and language enthusiasts.
+
+Always respond in English (or the student's native language) PLUS Chinese. Format your responses clearly:
+- Give the Chinese phrase/word with pinyin above and meaning below
+- Use <think> tags first to plan your teaching approach (2-3 sentences)
+- Be encouraging, patient, and use simple explanations
+- Always include: Chinese characters, pinyin (with tone marks), and English meaning
+- Correct mistakes gently and explain WHY
+
+Example format for vocabulary:
+**你好** (Nǐ hǎo) = Hello / Hi`
+  },
+  tones:{
+    label:'🎵 Tone Practice',
+    hint:'🎵 Tone Practice · Learn the 4 tones of Mandarin',
+    placeholder:'Ask about tones! e.g. "What is the difference between mā, má, mǎ and mà?"',
+    prompt:`You are 汉小伴, a Mandarin tone specialist. Focus exclusively on helping students master the 4 tones (and neutral tone) of Mandarin Chinese.
+
+Use <think> to plan your explanation, then:
+1. Always show tone marks clearly: ā á ǎ à (1st, 2nd, 3rd, 4th)
+2. Use the famous example: mā (妈 mother) má (麻 hemp) mǎ (马 horse) mà (骂 scold)
+3. Give memory tips for each tone: 1st=flat/high, 2nd=rising (like a question), 3rd=dip down then up, 4th=sharp fall
+4. Create minimal pairs for practice
+5. Explain tone sandhi rules (e.g. 3rd+3rd tone change)
+6. Give encouraging feedback
+Always include pinyin with tone marks, characters, and meaning.`
+  },
+  hsk:{
+    label:'📝 HSK Prep',
+    hint:'📝 HSK Prep · Vocabulary, grammar & exam tips for HSK 1-6',
+    placeholder:'Ask about HSK! e.g. "Teach me HSK 1 words" or "Explain HSK 3 grammar patterns"',
+    prompt:`You are 汉小伴, an HSK exam preparation specialist. Help students prepare for HSK levels 1-6.
+
+Use <think> to identify the HSK level and plan teaching strategy, then:
+1. For vocabulary: give character + pinyin + meaning + example sentence
+2. For grammar: explain the pattern in simple English, give formula, then 3 example sentences
+3. For exam tips: share test-taking strategies specific to HSK format
+4. Always indicate which HSK level the content belongs to
+5. Create practice exercises when appropriate
+6. Use tables for vocabulary lists:
+| 汉字 | Pinyin | Meaning | Example |
+|------|--------|---------|---------|
+
+Be systematic and encouraging. Reference official HSK vocabulary lists.`
+  },
+  characters:{
+    label:'🖊️ Characters',
+    hint:'🖊️ Characters · Learn stroke order, radicals & character meaning',
+    placeholder:'Ask about characters! e.g. "Explain the character 爱" or "What are common radicals?"',
+    prompt:`You are 汉小伴, a Chinese character (汉字 hànzì) specialist. Help students understand, write and remember Chinese characters.
+
+Use <think> to analyze the character's components, then explain:
+1. **Character**: Show the character prominently
+2. **Pinyin & Tone**: With tone mark
+3. **Meaning**: Primary and secondary meanings
+4. **Radical** (部首 bùshǒu): Name, meaning and how it helps decode the character
+5. **Stroke count & order**: Describe strokes in order (top→bottom, left→right)
+6. **Mnemonic**: Create a vivid story or image to remember it
+7. **Common words**: 3-5 words using this character
+8. **Similar characters**: Characters students might confuse it with
+
+Make learning characters feel like solving a puzzle — fun and memorable!`
+  },
+  grammar:{
+    label:'📐 Grammar',
+    hint:'📐 Grammar · Chinese sentence structure, particles & patterns',
+    placeholder:'Ask about grammar! e.g. "How do I use 了 le?" or "Explain 把 sentence structure"',
+    prompt:`You are 汉小伴, a Chinese grammar specialist. Explain Mandarin grammar clearly and systematically.
+
+Use <think> to identify the grammar point and common learner errors, then:
+1. **Grammar Point**: State it clearly
+2. **Formula**: Show the sentence pattern e.g. Subject + 把 + Object + Verb + Result
+3. **Simple Explanation**: In plain English, why this exists in Chinese
+4. **Examples**: 4-5 sentences from simple to complex, all with pinyin and translation
+5. **Common Mistakes**: What learners typically get wrong
+6. **Practice**: Give 2 fill-in-the-blank exercises
+7. **Compare**: How this differs from English structure
+
+Key grammar areas: 了(le), 的/地/得, 把(bǎ), 被(bèi), complement structures, aspect markers, measure words (量词), topic-comment structure.`
+  },
+  culture:{
+    label:'🏮 Culture',
+    hint:'🏮 Culture · Chinese culture, customs & language in context',
+    placeholder:'Ask about culture! e.g. "Why do Chinese people say 吃了吗 as a greeting?" or "Explain Spring Festival"',
+    prompt:`You are 汉小伴, a Chinese culture and language-in-context specialist. Help students understand Chinese culture to use the language more naturally and respectfully.
+
+Use <think> to consider cultural context and common misconceptions, then explain:
+1. **Cultural Background**: Historical or social context
+2. **Language Connection**: How culture shapes the language/expression
+3. **Appropriate Usage**: When and how to use related expressions
+4. **What to avoid**: Cultural taboos or potential misunderstandings
+5. **Fun Facts**: Interesting stories or connections
+6. **Practical Phrases**: Related Chinese expressions with pinyin
+
+Cover topics like: festivals (春节, 中秋节), food culture, face (面子), family relationships, business customs, regional differences, internet slang, etc.`
+  }
 };
 
-// ══ INIT ══
 function init(){
-  applySettings();
-  buildWaveform();
-  initSpeechRecognition();
+  applySettings();buildWaveform();initSpeechRecognition();
   if(convs.length>0)loadConv(convs[0].id);else showWelcome();
   renderSidebar();
   document.getElementById('input').placeholder=MODES[currentMode].placeholder;
@@ -480,12 +549,11 @@ function switchMode(mode,btn){
   if(!history.length)showWelcome();
 }
 
-// ══ SPEECH RECOGNITION (typing mode) ══
+// SPEECH RECOGNITION
 function initSpeechRecognition(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){document.getElementById('mic-btn').style.opacity='.3';return;}
-  recognition=new SR();
-  recognition.continuous=false;recognition.interimResults=true;
+  recognition=new SR();recognition.continuous=false;recognition.interimResults=true;
   let final_='';
   recognition.onstart=()=>{isRecording=true;final_='';document.getElementById('mic-btn').classList.add('recording');document.getElementById('voice-status').classList.add('show');};
   recognition.onresult=e=>{
@@ -495,41 +563,28 @@ function initSpeechRecognition(){
     document.getElementById('send-btn').disabled=!inp.value.trim();
   };
   recognition.onend=()=>{isRecording=false;document.getElementById('mic-btn').classList.remove('recording');document.getElementById('voice-status').classList.remove('show');document.getElementById('input').placeholder=MODES[currentMode].placeholder;};
-  recognition.onerror=e=>{isRecording=false;document.getElementById('mic-btn').classList.remove('recording');document.getElementById('voice-status').classList.remove('show');if(e.error==='not-allowed')showToast('请允许麦克风权限');};
+  recognition.onerror=e=>{isRecording=false;document.getElementById('mic-btn').classList.remove('recording');document.getElementById('voice-status').classList.remove('show');if(e.error==='not-allowed')showToast('Please allow microphone access');};
 }
 
 function toggleMic(){
-  if(!recognition){showToast('请使用Chrome浏览器以支持语音输入');return;}
+  if(!recognition){showToast('Please use Chrome browser for voice input');return;}
   if(isRecording){recognition.stop();}
-  else{recognition.lang=currentMode==='speak'?document.getElementById('call-lang-select').value:'zh-CN';recognition.start();}
+  else{recognition.lang='en-US';recognition.start();}
 }
 
-// ══ CALL SYSTEM ══
-function buildWaveform(){
-  const wf=document.getElementById('waveform');wf.innerHTML='';
-  for(let i=0;i<18;i++){const b=document.createElement('div');b.className='wave-bar';b.style.height='6px';wf.appendChild(b);}
-}
-
-function animateWave(active){
-  const bars=document.querySelectorAll('.wave-bar');
-  if(active){
-    waveInterval=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*28)+'px';b.classList.toggle('active',Math.random()>.3);});},120);
-  }else{
-    clearInterval(waveInterval);waveInterval=null;
-    bars.forEach(b=>{b.style.height='6px';b.classList.remove('active');});
-  }
-}
-
+// CALL SYSTEM
+function buildWaveform(){const wf=document.getElementById('waveform');wf.innerHTML='';for(let i=0;i<18;i++){const b=document.createElement('div');b.className='wave-bar';b.style.height='6px';wf.appendChild(b);}}
+function animateWave(on){const bars=document.querySelectorAll('.wave-bar');if(on){waveInterval=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*26)+'px';b.classList.toggle('active',Math.random()>.3);});},120);}else{clearInterval(waveInterval);waveInterval=null;bars.forEach(b=>{b.style.height='6px';b.classList.remove('active');});}}
 function openCall(){document.getElementById('call-overlay').classList.add('show');}
 
 function startCall(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast('请使用Chrome浏览器以支持通话功能');return;}
+  if(!SR){showToast('Please use Chrome browser for voice call');return;}
   callActive=true;
   document.getElementById('pre-call-controls').style.display='none';
   document.getElementById('call-controls').style.display='flex';
-  document.getElementById('call-status').textContent='通话中…';
-  addCallTranscript('系统','通话已接通，请开始说话 👋','rgba(255,255,255,.35)');
+  document.getElementById('call-status').textContent='Connected! Start speaking…';
+  addCallLine('System','Call connected! I am 汉小伴, your Chinese teacher 🐼 Let\'s practice!','rgba(255,255,255,.35)');
   listenCall();
 }
 
@@ -537,110 +592,77 @@ function listenCall(){
   if(!callActive)return;
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   callRecognition=new SR();
-  const lang=document.getElementById('call-lang-select').value;
-  callRecognition.lang=lang;
+  const userLang=document.getElementById('call-lang-select').value;
+  callRecognition.lang=userLang;
   callRecognition.continuous=false;callRecognition.interimResults=false;
-
   document.getElementById('call-avatar').className='call-avatar-ring listening';
-  document.getElementById('call-status').textContent='🎙️ 正在聆听…';
+  document.getElementById('call-status').textContent='🎙️ Listening…';
   animateWave(true);
-
   callRecognition.onresult=e=>{
     const text=e.results[0][0].transcript;
-    animateWave(false);
-    addCallTranscript('你',text,'#a78bfa');
-    sendCallMessage(text,lang);
+    animateWave(false);addCallLine('You',text,'#fb923c');
+    sendCallMessage(text,userLang);
   };
-
   callRecognition.onerror=e=>{
     animateWave(false);
-    if(e.error==='not-allowed'){showToast('请允许麦克风权限');endCall();return;}
-    if(callActive&&e.error!=='aborted'){
-      document.getElementById('call-status').textContent='未检测到声音，请重新说话…';
-      setTimeout(()=>{if(callActive)listenCall();},1500);
-    }
+    if(e.error==='not-allowed'){showToast('Please allow microphone access');endCall();return;}
+    if(callActive&&e.error!=='aborted'){document.getElementById('call-status').textContent='No speech detected, try again…';setTimeout(()=>{if(callActive)listenCall();},1500);}
   };
-
-  callRecognition.onend=()=>{
-    animateWave(false);
-    // If no result was handled (timeout/silence), restart listening
-    if(callActive&&!callBusy){
-      setTimeout(()=>{if(callActive&&!callBusy)listenCall();},500);
-    }
-  };
-
+  callRecognition.onend=()=>{animateWave(false);if(callActive&&!callBusy)setTimeout(()=>{if(callActive&&!callBusy)listenCall();},500);};
   if(!callMuted)callRecognition.start();
 }
 
-async function sendCallMessage(text,lang){
-  if(callBusy)return;
-  callBusy=true;
+async function sendCallMessage(text,userLang){
+  if(callBusy)return;callBusy=true;
   document.getElementById('call-avatar').className='call-avatar-ring';
-  document.getElementById('call-status').textContent='⏳ AI 思考中…';
-
-  // Also add to main chat history
-  const userMsg={role:'user',content:text};
-  history.push(userMsg);
+  document.getElementById('call-status').textContent='⏳ Thinking…';
+  const userMsg={role:'user',content:text};history.push(userMsg);
   if(document.getElementById('messages').querySelector('#welcome'))document.getElementById('messages').querySelector('#welcome')?.closest('.msg-wrap')?.remove();
-  document.getElementById('messages').appendChild(buildMsgEl(userMsg,history.length-1));
-  scrollBottom();
-  saveConv(text);
+  document.getElementById('messages').appendChild(buildMsgEl(userMsg,history.length-1));scrollBottom();saveConv(text);
 
-  const callPrompt=`你是「语伴AI」外语口语练习助手。用户正在用${lang}进行语音通话练习。请：
-1. 用${lang}对应的语言自然回复（如英语用英语回，日语用日语回）
-2. 回复要简洁自然，像真实对话，不超过3句话
-3. 在回复末尾加一句中文括号说明：（语言点：xxx）
-4. 不要用Markdown格式，纯文本即可`;
+  const lang=userLang.split('-')[0];
+  const langNames={en:'English',ja:'Japanese',ko:'Korean',fr:'French',es:'Spanish',de:'German'};
+  const callPrompt=`You are 汉小伴, a Chinese teacher having a voice conversation with a student whose native language is ${langNames[lang]||'English'}.
+Rules for this voice call:
+1. Keep responses SHORT (2-3 sentences max) — this is a voice conversation
+2. Respond in ${langNames[lang]||'English'} + add the Chinese phrase they should practice
+3. If they say something in Chinese, praise them and gently correct any errors
+4. If they ask a question, answer simply and clearly
+5. Always give pinyin with tone marks for any Chinese you mention
+6. Be warm, encouraging, like a patient teacher
+7. End your response with a simple question or prompt to keep the conversation going
+No markdown formatting — plain conversational text only.`;
 
   try{
-    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:history.slice(-6).map(m=>({role:m.role,content:m.content})),systemPrompt:callPrompt})});
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-6).map(m=>({role:m.role,content:m.content})),systemPrompt:callPrompt})});
     const d=await r.json();
-    const reply=(d.reply||'Sorry, I had trouble understanding. Could you repeat that?').replace(/<think>[\s\S]*?<\/think>/i,'').trim();
-
-    const aiMsg={role:'assistant',content:reply};
-    history.push(aiMsg);
-    document.getElementById('messages').appendChild(buildMsgEl(aiMsg,history.length-1));
-    scrollBottom();
-    saveConv(text);
-
-    addCallTranscript('语伴AI',reply,'#e8e4f8');
-    document.getElementById('call-status').textContent='🔊 语伴AI 正在说话…';
+    const reply=(d.reply||'Sorry, I had trouble. Could you repeat that?').replace(/<think>[\s\S]*?<\/think>/i,'').trim();
+    const aiMsg={role:'assistant',content:reply};history.push(aiMsg);
+    document.getElementById('messages').appendChild(buildMsgEl(aiMsg,history.length-1));scrollBottom();saveConv(text);
+    addCallLine('汉小伴',reply,'#fed7aa');
+    document.getElementById('call-status').textContent='🔊 Speaking…';
     document.getElementById('call-avatar').className='call-avatar-ring speaking';
     animateWave(true);
-    speakText(reply,lang,()=>{
-      callBusy=false;
-      animateWave(false);
-      document.getElementById('call-avatar').className='call-avatar-ring';
-      if(callActive)setTimeout(()=>listenCall(),600);
-    });
-  }catch{
-    callBusy=false;
-    document.getElementById('call-status').textContent='出错了，请重试…';
-    animateWave(false);
-    if(callActive)setTimeout(()=>listenCall(),2000);
-  }
+    speakText(reply,'zh-CN',()=>{callBusy=false;animateWave(false);document.getElementById('call-avatar').className='call-avatar-ring';if(callActive)setTimeout(()=>listenCall(),600);});
+  }catch{callBusy=false;document.getElementById('call-status').textContent='Error, please try again…';animateWave(false);if(callActive)setTimeout(()=>listenCall(),2000);}
 }
 
 function speakText(text,lang,onEnd){
   if(!speakerOn){onEnd();return;}
   synth.cancel();
   const utt=new SpeechSynthesisUtterance(text);
-  utt.lang=lang;
-  utt.rate=0.95;utt.pitch=1.05;
-  // Try to pick a good voice for the language
+  utt.lang=lang;utt.rate=0.9;utt.pitch=1.05;
   const voices=synth.getVoices();
-  const match=voices.find(v=>v.lang.startsWith(lang.split('-')[0])&&!v.name.includes('Google'));
+  const match=voices.find(v=>v.lang.startsWith('zh'));
   if(match)utt.voice=match;
-  utt.onend=onEnd;utt.onerror=onEnd;
-  synth.speak(utt);
+  utt.onend=onEnd;utt.onerror=onEnd;synth.speak(utt);
 }
 
-function addCallTranscript(who,text,color){
+function addCallLine(who,text,color){
   const div=document.getElementById('call-transcript');
   const old=div.querySelector('span[style]');if(old)old.remove();
   const p=document.createElement('p');p.style.marginBottom='6px';
-  p.innerHTML=`<span style="color:${color};font-weight:600">${who}：</span><span style="color:rgba(255,255,255,.75)">${esc(text)}</span>`;
+  p.innerHTML=`<span style="color:${color};font-weight:600">${who}: </span><span style="color:rgba(255,255,255,.75)">${esc(text)}</span>`;
   div.appendChild(p);div.scrollTop=div.scrollHeight;
 }
 
@@ -652,113 +674,129 @@ function endCall(){
   document.getElementById('pre-call-controls').style.display='';
   document.getElementById('call-controls').style.display='none';
   document.getElementById('call-avatar').className='call-avatar-ring';
-  document.getElementById('call-status').textContent='选择语言，点击接听开始通话';
-  document.getElementById('call-transcript').innerHTML='<span style="color:rgba(255,255,255,.3);font-size:13px">通话内容将显示在这里…</span>';
-  showToast('通话已结束');
+  document.getElementById('call-status').textContent='Select your language, then tap 📞 to start';
+  document.getElementById('call-transcript').innerHTML='<span style="color:rgba(255,255,255,.3);font-size:13px">Conversation will appear here…</span>';
+  showToast('Call ended');
 }
 
-function toggleCallMute(){
-  callMuted=!callMuted;
-  const btn=document.getElementById('btn-mute-call');
-  btn.classList.toggle('muted',callMuted);
-  btn.querySelector('.ctrl-btn-icon').textContent=callMuted?'🔇':'🎙️';
-  btn.querySelector('.ctrl-btn-label').textContent=callMuted?'取消静音':'静音';
-  if(callMuted&&callRecognition){try{callRecognition.stop();}catch(e){}}
-  else if(!callMuted&&callActive&&!callBusy)listenCall();
-}
+function toggleCallMute(){callMuted=!callMuted;const btn=document.getElementById('btn-mute-call');btn.classList.toggle('muted',callMuted);btn.querySelector('.ctrl-btn-icon').textContent=callMuted?'🔇':'🎙️';btn.querySelector('.ctrl-btn-label').textContent=callMuted?'Unmute':'Mute';if(callMuted&&callRecognition){try{callRecognition.stop();}catch(e){}}else if(!callMuted&&callActive&&!callBusy)listenCall();}
+function toggleSpeaker(){speakerOn=!speakerOn;const btn=document.getElementById('btn-speaker');btn.classList.toggle('off',!speakerOn);btn.querySelector('.ctrl-btn-icon').textContent=speakerOn?'🔊':'🔇';if(!speakerOn)synth.cancel();}
 
-function toggleSpeaker(){
-  speakerOn=!speakerOn;
-  const btn=document.getElementById('btn-speaker');
-  btn.classList.toggle('off',!speakerOn);
-  btn.querySelector('.ctrl-btn-icon').textContent=speakerOn?'🔊':'🔇';
-  if(!speakerOn)synth.cancel();
-}
-
-// ══ SIDEBAR & CONVS ══
+// SIDEBAR & CONVS
 function renderSidebar(filter=''){
-  const list=document.getElementById('conv-list');
-  const f=filter.toLowerCase();
+  const list=document.getElementById('conv-list');const f=filter.toLowerCase();
   const filtered=f?convs.filter(c=>c.title.toLowerCase().includes(f)):convs;
-  if(!filtered.length){list.innerHTML=`<div style="padding:24px 10px;text-align:center;font-size:13px;color:rgba(255,255,255,.2)">${f?'没有找到':'暂无对话历史'}</div>`;return;}
-  const today=new Date();today.setHours(0,0,0,0);
-  const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);
-  const groups={};
-  filtered.forEach(c=>{const d=new Date(c.ts||Date.now());d.setHours(0,0,0,0);const g=d>=today?'今天':d>=yesterday?'昨天':'更早';if(!groups[g])groups[g]=[];groups[g].push(c);});
-  let html='';
-  ['今天','昨天','更早'].forEach(g=>{
-    if(!groups[g])return;
-    html+=`<div class="conv-group-label">${g}</div>`;
-    groups[g].forEach(c=>{html+=`<div class="conv-item${c.id===activeId?' active':''}" onclick="loadConv('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="ci-title">${esc(c.title)}</span><span class="ci-del" onclick="delConv(event,'${c.id}')">×</span></div>`;});
-  });
+  if(!filtered.length){list.innerHTML=`<div style="padding:24px 10px;text-align:center;font-size:13px;color:rgba(255,255,255,.2)">${f?'No results':'No conversations yet'}</div>`;return;}
+  const today=new Date();today.setHours(0,0,0,0);const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);
+  const groups={};filtered.forEach(c=>{const d=new Date(c.ts||Date.now());d.setHours(0,0,0,0);const g=d>=today?'Today':d>=yesterday?'Yesterday':'Earlier';if(!groups[g])groups[g]=[];groups[g].push(c);});
+  let html='';['Today','Yesterday','Earlier'].forEach(g=>{if(!groups[g])return;html+=`<div class="conv-group-label">${g}</div>`;groups[g].forEach(c=>{html+=`<div class="conv-item${c.id===activeId?' active':''}" onclick="loadConv('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="ci-title">${esc(c.title)}</span><span class="ci-del" onclick="delConv(event,'${c.id}')">×</span></div>`;});});
   list.innerHTML=html;
 }
 
 function toggleSidebar(){const s=document.getElementById('sidebar');if(window.innerWidth<=640)s.classList.toggle('mobile-open');else s.classList.toggle('hidden');}
-function newChat(){activeId=null;history=[];attachments=[];showWelcome();renderSidebar();document.getElementById('topbar-title').textContent='语伴 AI';document.getElementById('attach-preview-bar').innerHTML='';document.getElementById('attach-preview-bar').classList.remove('show');if(window.innerWidth<=640)document.getElementById('sidebar').classList.remove('mobile-open');}
+function newChat(){activeId=null;history=[];attachments=[];showWelcome();renderSidebar();document.getElementById('topbar-title').textContent='汉小伴 HanXiaoBan';document.getElementById('attach-preview-bar').innerHTML='';document.getElementById('attach-preview-bar').classList.remove('show');if(window.innerWidth<=640)document.getElementById('sidebar').classList.remove('mobile-open');}
 function loadConv(id){const c=convs.find(x=>x.id===id);if(!c)return;activeId=id;history=[...(c.messages||[])];attachments=[];renderSidebar();renderMessages();document.getElementById('topbar-title').textContent=c.title;if(window.innerWidth<=640)document.getElementById('sidebar').classList.remove('mobile-open');}
 function saveConv(firstText){
   if(!activeId){activeId=Date.now().toString();const e=MODES[currentMode].label.slice(0,2);const title=e+' '+firstText.slice(0,26)+(firstText.length>26?'…':'');convs.unshift({id:activeId,title,ts:Date.now(),messages:history});document.getElementById('topbar-title').textContent=firstText.slice(0,22)+(firstText.length>22?'…':'');}
   else{const c=convs.find(x=>x.id===activeId);if(c){c.messages=history;c.ts=Date.now();}}
-  localStorage.setItem('yuban_convs',JSON.stringify(convs));renderSidebar();
+  localStorage.setItem('hanxiaoban_convs',JSON.stringify(convs));renderSidebar();
 }
-function delConv(e,id){e.stopPropagation();convs=convs.filter(c=>c.id!==id);localStorage.setItem('yuban_convs',JSON.stringify(convs));if(activeId===id)newChat();else renderSidebar();}
+function delConv(e,id){e.stopPropagation();convs=convs.filter(c=>c.id!==id);localStorage.setItem('hanxiaoban_convs',JSON.stringify(convs));if(activeId===id)newChat();else renderSidebar();}
 function clearAll(){document.getElementById('clear-modal').classList.add('show');}
-function confirmClearAll(){convs=[];localStorage.removeItem('yuban_convs');document.getElementById('clear-modal').classList.remove('show');newChat();}
+function confirmClearAll(){convs=[];localStorage.removeItem('hanxiaoban_convs');document.getElementById('clear-modal').classList.remove('show');newChat();}
 
-// ══ WELCOME ══
+// WELCOME
 function showWelcome(){
-  const cards=[
-    {icon:'📞',title:'语音通话练习',sub:'点击右上角通话按钮，开口说外语！',q:''},
-    {icon:'🗣️',title:'英语自由对话',sub:'用英语聊天，练习日常表达',q:"Let's chat in English! Start with a simple topic."},
-    {icon:'✍️',title:'语法纠错',sub:'粘贴你写的句子，AI帮你分析错误',q:'Please correct this: I have went to school yesterday.'},
-    {icon:'🔄',title:'翻译解析',sub:'不只翻译，深度解析句子结构',q:'请翻译并解析：The early bird catches the worm.'},
-  ];
-  const cardsHtml=cards.map(c=>c.q?`<div class="sug-card" onclick="quick(${JSON.stringify(c.q)})"><div class="sc-row"><span class="sc-icon">${c.icon}</span><span class="sc-title">${c.title}</span></div><div class="sc-sub">${c.sub}</div></div>`:
-    `<div class="sug-card" onclick="openCall()" style="border-color:var(--green,#10b981);background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(16,185,129,.04))"><div class="sc-row"><span class="sc-icon">${c.icon}</span><span class="sc-title" style="color:#10b981">${c.title}</span></div><div class="sc-sub">${c.sub}</div></div>`).join('');
+  const cards={
+    chat:[
+      {icon:'👋',title:'Say Hello in Chinese',sub:'Learn your first Chinese phrase right now',q:'How do I say "Hello, my name is [name], nice to meet you" in Chinese? Please teach me with pinyin.'},
+      {icon:'📞',title:'Voice Call Practice',sub:'Talk with your AI Chinese teacher live!',q:'',call:true},
+      {icon:'🔢',title:'Learn Numbers 1-10',sub:'Master basic numbers with pronunciation',q:'Please teach me numbers 1 to 10 in Chinese with pinyin and characters.'},
+      {icon:'🍜',title:'Food & Restaurant',sub:'Order food like a local in China',q:'How do I order food in a Chinese restaurant? Teach me useful phrases with pinyin.'},
+    ],
+    tones:[
+      {icon:'1️⃣',title:'First Tone (阴平)',sub:'High and flat, like singing a note',q:'Explain the first tone in Mandarin with examples. How should I practice it?'},
+      {icon:'2️⃣',title:'Second Tone (阳平)',sub:'Rising, like asking "What?"',q:'Explain the second tone in Mandarin with examples and practice words.'},
+      {icon:'3️⃣',title:'Third Tone (上声)',sub:'Dips down then rises again',q:'The third tone is the hardest! Explain it with examples and the tone sandhi rule.'},
+      {icon:'4️⃣',title:'Fourth Tone (去声)',sub:'Sharp falling, like a command',q:'Explain the fourth tone in Mandarin with examples. Also explain the neutral tone.'},
+    ],
+    hsk:[
+      {icon:'⭐',title:'HSK 1 Basics',sub:'150 essential words for beginners',q:'Give me the 20 most important HSK 1 vocabulary words in a table with pinyin and meaning.'},
+      {icon:'⭐⭐',title:'HSK 2-3 Expansion',sub:'Build on your foundation',q:'What are the key grammar patterns I need to know for HSK 2 and HSK 3?'},
+      {icon:'⭐⭐⭐',title:'HSK 4-5 Advanced',sub:'Complex sentences & formal Chinese',q:'Explain the key differences between HSK 4 and HSK 5 level Chinese. What grammar should I focus on?'},
+      {icon:'📋',title:'HSK Exam Tips',sub:'Strategies for test day success',q:'Give me your top tips for passing the HSK exam. What are common mistakes and how to avoid them?'},
+    ],
+    characters:[
+      {icon:'❤️',title:'Character: 爱 (Love)',sub:'Learn the most romantic character',q:'Explain the character 爱 (love) — its radical, stroke order, meaning, and how to remember it.'},
+      {icon:'🌟',title:'Common Radicals',sub:'Decode hundreds of characters',q:'What are the 20 most important Chinese radicals? Show me how each one helps me understand character meanings.'},
+      {icon:'🔤',title:'Simple Strokes',sub:'Learn the 8 basic stroke types',sub2:'',q:'Explain the 8 basic Chinese strokes (横竖撇捺折钩点提) with examples. Why is stroke order important?'},
+      {icon:'🔢',title:'Number Characters',sub:'一二三四五六七八九十',q:'Teach me the Chinese number characters from 1 to 10, with their radicals and how to write them.'},
+    ],
+    grammar:[
+      {icon:'了',title:'了 (le) — Completion',sub:'The most confusing grammar particle',q:'Explain the particle 了 (le) in Chinese — when to use it, when NOT to use it, with clear examples.'},
+      {icon:'把',title:'把 (bǎ) — Object First',sub:'Bring objects to the front',q:'Explain the 把 (bǎ) sentence structure with formula, examples and common mistakes.'},
+      {icon:'被',title:'被 (bèi) — Passive',sub:'When something is done to you',q:'Explain the passive structure with 被 (bèi) in Chinese. When is it used and when should I avoid it?'},
+      {icon:'的',title:'的地得 — Three "De"s',sub:'Master this common confusion',q:'Explain the difference between 的, 地, and 得 in Chinese with clear examples of when to use each one.'},
+    ],
+    culture:[
+      {icon:'🥢',title:'Chinese Food Culture',sub:'Food is central to Chinese culture',q:'Explain Chinese food culture — why is food so important in China? What should I know about dining etiquette?'},
+      {icon:'🧧',title:'Chinese New Year',sub:'The most important festival',q:'Tell me about Chinese New Year (春节): traditions, key vocabulary, and important phrases to know.'},
+      {icon:'😊',title:'Face (面子 Miànzi)',sub:'Understanding this key concept',q:'Explain the Chinese concept of 面子 (face/miànzi). How does it affect language and behavior in China?'},
+      {icon:'💼',title:'Business Chinese',sub:'Greetings and meeting etiquette',q:'What do I need to know about Chinese business culture? Give me key phrases and etiquette tips.'},
+    ]
+  };
+  const modeCards=(cards[currentMode]||cards.chat).map(c=>c.call?
+    `<div class="sug-card" onclick="openCall()" style="border-color:var(--accent);background:var(--accent-light)"><div class="sc-row"><span class="sc-icon">${c.icon}</span><span class="sc-title" style="color:var(--accent)">${c.title}</span></div><div class="sc-sub">${c.sub}</div></div>`:
+    `<div class="sug-card" onclick="quick(${JSON.stringify(c.q)})"><div class="sc-row"><span class="sc-icon">${c.icon}</span><span class="sc-title">${c.title}</span></div><div class="sc-sub">${c.sub}</div></div>`
+  ).join('');
   document.getElementById('messages').innerHTML=`<div class="msg-wrap"><div id="welcome">
     <div class="welcome-hero">
-      <div class="welcome-logo-ring"><svg width="38" height="38" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 4v-4z" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h1>你好，我是<span>语伴 AI</span></h1>
-      <p>你的专属外语学习伙伴，支持<strong>打字、语音输入</strong>和<strong>📞 AI 语音通话</strong><br>说话即练习，AI听懂并用外语回应你！</p>
-      <button class="call-cta" onclick="openCall()">📞 开始语音通话练习</button>
-      <div class="lang-pills"><span class="lang-pill">🇬🇧 英语</span><span class="lang-pill">🇯🇵 日语</span><span class="lang-pill">🇰🇷 韩语</span><span class="lang-pill">🇫🇷 法语</span><span class="lang-pill">🇪🇸 西班牙语</span></div>
+      <div class="welcome-logo-ring">🐼</div>
+      <h1>Welcome to <span class="cn">汉小伴</span></h1>
+      <p>Your AI Chinese language teacher · 你的AI中文老师<br>Built for <strong>HSK candidates, overseas learners & Chinese enthusiasts</strong><br>Supports 🇺🇸 English · 🇯🇵 Japanese · 🇰🇷 Korean · 🇫🇷 French · 🇪🇸 Spanish</p>
+      <button class="call-cta" onclick="openCall()">📞 Start Voice Conversation</button>
+      <div class="user-pills">
+        <span class="user-pill">🎓 HSK Candidates</span>
+        <span class="user-pill">🌍 Overseas Learners</span>
+        <span class="user-pill">👨‍👩‍👧 Heritage Learners</span>
+        <span class="user-pill">💼 Business Professionals</span>
+        <span class="user-pill">❤️ Language Enthusiasts</span>
+      </div>
     </div>
-    <div class="sug-section-label">快速开始</div>
-    <div class="sug-grid">${cardsHtml}</div>
+    <div class="sug-section-label">${MODES[currentMode].label} — Quick Start</div>
+    <div class="sug-grid">${modeCards}</div>
   </div></div>`;
 }
 
-// ══ PARSE & RENDER ══
+// PARSE & RENDER
 function parseReply(raw){const m=raw.match(/<think>([\s\S]*?)<\/think>/i);return{think:m?m[1].trim():null,answer:raw.replace(/<think>[\s\S]*?<\/think>/i,'').trim()};}
-function buildThinkBlock(text){const id='tk'+Date.now()+Math.random().toString(36).slice(2);return`<div class="think-block"><div class="think-header" onclick="toggleThink('${id}')"><span>💭 查看分析过程</span><span class="think-arrow" id="${id}-a">▼</span></div><div class="think-body" id="${id}">${text.split('\n').filter(l=>l.trim()).map(l=>`<p>${esc(l)}</p>`).join('')}</div></div>`;}
+function buildThinkBlock(text){const id='tk'+Date.now()+Math.random().toString(36).slice(2);return`<div class="think-block"><div class="think-header" onclick="toggleThink('${id}')"><span>💭 View teaching analysis</span><span class="think-arrow" id="${id}-a">▼</span></div><div class="think-body" id="${id}">${text.split('\n').filter(l=>l.trim()).map(l=>`<p>${esc(l)}</p>`).join('')}</div></div>`;}
 function toggleThink(id){document.getElementById(id)?.classList.toggle('open');document.getElementById(id+'-a')?.classList.toggle('open');}
 
 function renderMessages(){const el=document.getElementById('messages');el.innerHTML='';history.forEach((m,i)=>el.appendChild(buildMsgEl(m,i)));scrollBottom();}
 function buildMsgEl(m,idx){
   const wrap=document.createElement('div');wrap.className='msg-group';
   if(m.role==='user'){
-    let atHtml='';if(m.attachments?.length){atHtml='<div class="attach-row">';m.attachments.forEach(a=>{atHtml+=`<div class="attach-chip"><span>${fileIcon(a.name)}</span><span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">${esc(a.name)}</span></div>`;});atHtml+='</div>';}
-    wrap.innerHTML=`<div class="msg-user"><div><div style="display:flex;flex-direction:column;align-items:flex-end">${atHtml}<div class="user-bubble">${esc(m.content||'')}</div></div><div class="msg-actions" style="justify-content:flex-end"><button class="ma-btn" onclick="copyText(${JSON.stringify(m.content||'')})">📋 复制</button></div></div><div class="user-av">我</div></div>`;
+    wrap.innerHTML=`<div class="msg-user"><div><div class="user-bubble">${esc(m.content||'')}</div><div class="msg-actions" style="justify-content:flex-end"><button class="ma-btn" onclick="copyText(${JSON.stringify(m.content||'')})">📋 Copy</button></div></div><div class="user-av">🙋</div></div>`;
   }else{
     const{think,answer}=parseReply(m.content||'');
-    wrap.innerHTML=`<div class="msg-ai">${AI_AV}<div><div class="ai-content-wrap"><div class="ai-body">${think?buildThinkBlock(think):''}${fmt(answer)}</div></div><div class="msg-actions"><button class="ma-btn" onclick="copyText(${JSON.stringify(answer)})">📋 复制</button><button class="ma-btn" onclick="regenFrom(${idx})">🔄 重新生成</button></div></div></div>`;
+    wrap.innerHTML=`<div class="msg-ai">${AI_AV}<div><div class="ai-content-wrap"><div class="ai-body">${think?buildThinkBlock(think):''}${fmt(answer)}</div></div><div class="msg-actions"><button class="ma-btn" onclick="copyText(${JSON.stringify(answer)})">📋 Copy</button><button class="ma-btn" onclick="regenFrom(${idx})">🔄 Retry</button></div></div></div>`;
   }
   return wrap;
 }
 function addMsgEl(m){document.getElementById('welcome')?.closest('.msg-wrap')?.remove();document.getElementById('messages').appendChild(buildMsgEl(m,history.length-1));scrollBottom();}
 function quick(text){document.getElementById('input').value=text;onInput();send();}
 
-// ══ SEND ══
+// SEND
 async function send(){
   const inp=document.getElementById('input');const text=inp.value.trim();
   if((!text&&!attachments.length)||busy)return;
   inp.value='';inp.style.height='auto';
   const userMsg={role:'user',content:text,attachments:attachments.length?[...attachments]:undefined};
-  history.push(userMsg);addMsgEl(userMsg);saveConv(text||'上传了文件');
+  history.push(userMsg);addMsgEl(userMsg);saveConv(text||'file upload');
   attachments=[];document.getElementById('attach-preview-bar').innerHTML='';document.getElementById('attach-preview-bar').classList.remove('show');
   busy=true;document.getElementById('send-btn').disabled=true;document.getElementById('send-btn').style.display='none';document.getElementById('stop-btn').style.display='flex';
-  let content=text;if(userMsg.attachments?.length){const desc=userMsg.attachments.map(a=>a.textContent?`[文件: ${a.name}]\n内容：\n${a.textContent}`:`[文件: ${a.name}]`).join('\n\n');content=desc+(text?'\n\n用户问题：'+text:'');}
+  let content=text;if(userMsg.attachments?.length){const desc=userMsg.attachments.map(a=>a.textContent?`[File: ${a.name}]\nContent:\n${a.textContent}`:`[File: ${a.name}]`).join('\n\n');content=desc+(text?'\n\nUser question: '+text:'');}
   const typingEl=document.createElement('div');typingEl.className='msg-group';typingEl.id='typing';
   typingEl.innerHTML=`<div class="msg-ai">${AI_AV}<div><div class="ai-content-wrap"><div class="typing-indicator"><span></span><span></span><span></span></div></div></div></div>`;
   document.getElementById('messages').appendChild(typingEl);scrollBottom();
@@ -766,40 +804,35 @@ async function send(){
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:apiMsgs,systemPrompt:MODES[currentMode].prompt})});
     const d=await r.json();document.getElementById('typing')?.remove();
-    const reply=d.reply||d.error||'出错了，请重试';
+    const reply=d.reply||d.error||'Something went wrong, please try again.';
     const aiMsg={role:'assistant',content:reply};history.push(aiMsg);addMsgEl(aiMsg);saveConv(text);
-  }catch{document.getElementById('typing')?.remove();const aiMsg={role:'assistant',content:'网络出错，请检查连接后重试。'};history.push(aiMsg);addMsgEl(aiMsg);}
+  }catch{document.getElementById('typing')?.remove();const aiMsg={role:'assistant',content:'Network error. Please check your connection.'};history.push(aiMsg);addMsgEl(aiMsg);}
   busy=false;document.getElementById('stop-btn').style.display='none';document.getElementById('send-btn').style.display='flex';document.getElementById('send-btn').disabled=!document.getElementById('input').value.trim();
 }
 function stopGen(){busy=false;document.getElementById('stop-btn').style.display='none';document.getElementById('send-btn').style.display='flex';document.getElementById('typing')?.remove();}
 function regenFrom(idx){if(busy)return;let ui=idx;while(ui>=0&&history[ui].role!=='user')ui--;if(ui<0)return;const last=history[ui];history=history.slice(0,ui);renderMessages();document.getElementById('input').value=last.content||'';send();}
 
-// ══ FILES ══
+// FILES
 function handleFiles(files){Array.from(files).forEach(file=>{const reader=new FileReader();const size=file.size<1024?file.size+' B':file.size<1048576?(file.size/1024).toFixed(1)+' KB':(file.size/1048576).toFixed(1)+' MB';reader.onload=e=>{attachments.push({name:file.name,size,textContent:e.target.result});renderAttachBar();};reader.readAsText(file,'utf-8');});document.getElementById('file-input').value='';}
-function renderAttachBar(){const bar=document.getElementById('attach-preview-bar');bar.classList.add('show');bar.innerHTML=attachments.map((a,i)=>`<div class="ap-chip"><span>${fileIcon(a.name)}</span><span class="ap-chip-name">${esc(a.name)}</span><button class="ap-chip-rm" onclick="removeAttach(${i})">×</button></div>`).join('');}
+function renderAttachBar(){const bar=document.getElementById('attach-preview-bar');bar.classList.add('show');bar.innerHTML=attachments.map((a,i)=>`<div class="ap-chip"><span>${fileIcon(a.name)}</span><span style="max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">${esc(a.name)}</span><button class="ap-chip-rm" onclick="removeAttach(${i})">×</button></div>`).join('');}
 function removeAttach(i){attachments.splice(i,1);if(!attachments.length){document.getElementById('attach-preview-bar').classList.remove('show');document.getElementById('attach-preview-bar').innerHTML='';}else renderAttachBar();}
 function fileIcon(n){return({csv:'📊',txt:'📃',md:'📃',json:'🔧'})[(n.split('.').pop()||'').toLowerCase()]||'📁';}
 
-// ══ INPUT ══
 function onInput(){const inp=document.getElementById('input');inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,180)+'px';document.getElementById('send-btn').disabled=(!inp.value.trim()&&!attachments.length)||busy;}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 function scrollBottom(){const el=document.getElementById('messages');el.scrollTop=el.scrollHeight;}
 function onScroll(){const el=document.getElementById('messages');document.getElementById('scroll-btn').classList.toggle('show',el.scrollHeight-el.scrollTop-el.clientHeight>120);}
-
-// ══ SETTINGS ══
 function openSettings(){document.getElementById('settings-modal').classList.add('show');}
 function closeSettings(){document.getElementById('settings-modal').classList.remove('show');}
-function saveSettings(){settings.fontSize=document.getElementById('font-size-sel').value;settings.dark=document.body.classList.contains('dark');localStorage.setItem('yuban_settings',JSON.stringify(settings));document.body.style.fontSize=settings.fontSize+'px';closeSettings();showToast('设置已保存 ✓');}
-function toggleDark(){document.body.classList.toggle('dark');settings.dark=document.body.classList.contains('dark');document.getElementById('dark-toggle').classList.toggle('on',settings.dark);localStorage.setItem('yuban_settings',JSON.stringify(settings));}
-function exportChat(){if(!history.length){showToast('没有可导出的对话');return;}const text=history.map(m=>{const{answer}=parseReply(m.content||'');return`【${m.role==='user'?'我':'语伴AI'}】\n${m.role==='user'?m.content:answer}`;}).join('\n\n---\n\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));a.download=`语伴AI_${new Date().toLocaleDateString('zh')}.txt`;a.click();showToast('已导出对话记录');}
-
-// ══ UTILS ══
-function copyText(t){navigator.clipboard.writeText(t).then(()=>showToast('已复制 ✓'));}
+function saveSettings(){settings.fontSize=document.getElementById('font-size-sel').value;settings.dark=document.body.classList.contains('dark');localStorage.setItem('hanxiaoban_settings',JSON.stringify(settings));document.body.style.fontSize=settings.fontSize+'px';closeSettings();showToast('Settings saved ✓');}
+function toggleDark(){document.body.classList.toggle('dark');settings.dark=document.body.classList.contains('dark');document.getElementById('dark-toggle').classList.toggle('on',settings.dark);localStorage.setItem('hanxiaoban_settings',JSON.stringify(settings));}
+function exportChat(){if(!history.length){showToast('No conversation to export');return;}const text=history.map(m=>{const{answer}=parseReply(m.content||'');return`[${m.role==='user'?'Student':'HanXiaoBan'}]\n${m.role==='user'?m.content:answer}`;}).join('\n\n---\n\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));a.download=`HanXiaoBan_${new Date().toLocaleDateString()}.txt`;a.click();showToast('Exported!');}
+function copyText(t){navigator.clipboard.writeText(t).then(()=>showToast('Copied ✓'));}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmt(t){
   if(!t)return'';
-  t=t.replace(/```(\w*)\n?([\s\S]*?)```/g,(_,l,c)=>`<div class="code-block-wrap"><div class="code-header"><span class="code-lang">${l||'code'}</span><button class="copy-code-btn" onclick="copyText(${JSON.stringify(c.trim())})">复制</button></div><pre><code>${esc(c.trim())}</code></pre></div>`);
+  t=t.replace(/```(\w*)\n?([\s\S]*?)```/g,(_,l,c)=>`<div class="code-block-wrap"><div class="code-header"><span class="code-lang">${l||'text'}</span><button class="copy-code-btn" onclick="copyText(${JSON.stringify(c.trim())})">Copy</button></div><pre><code>${esc(c.trim())}</code></pre></div>`);
   t=t.replace(/`([^`\n]+)`/g,'<code>$1</code>');
   t=t.replace(/\*\*\*(.*?)\*\*\*/g,'<strong><em>$1</em></strong>');
   t=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
@@ -812,7 +845,6 @@ function fmt(t){
   return t.split(/\n{2,}/).map(p=>{p=p.trim();if(!p)return'';if(/^<(h[123]|ul|ol|table|pre|div|blockquote)/.test(p))return p;return`<p>${p.replace(/\n/g,'<br>')}</p>`;}).join('');
 }
 document.querySelectorAll('.modal-overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('show');}));
-// Load voices when available
 if(synth)synth.onvoiceschanged=()=>synth.getVoices();
 init();
 </script>
